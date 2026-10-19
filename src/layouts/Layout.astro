@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import site from '../data/site.json';
 import { getCollection } from 'astro:content';
+import CookieConsent from '../components/CookieConsent.astro';
 
 interface Props {
   title?: string;
@@ -129,6 +130,7 @@ const nav = [
               <li><a href={site.webDesignUrl} target="_blank" rel="noopener" class="hover:text-white transition-colors">Tvorba webů ↗</a></li>
               {site.linkedin && <li><a href={site.linkedin} target="_blank" rel="noopener" class="hover:text-white transition-colors">LinkedIn ↗</a></li>}
               <li><a href="/ochrana-osobnich-udaju/" class="hover:text-white transition-colors">Ochrana osobních údajů</a></li>
+              <li><button type="button" data-cc="show-preferencesModal" class="hover:text-white transition-colors cursor-pointer">Nastavení cookies</button></li>
             </ul>
           </div>
         </div>
@@ -185,5 +187,6 @@ const nav = [
         });
       });
     </script>
+    <CookieConsent />
   </body>
 </html>
