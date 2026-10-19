@@ -1,8 +1,10 @@
 ---
 title: Individuální mentoring
 audience: jednotlivci
+active: true
 order: 3
-short: Konzultace a mentoring 1:1 pro marketéry a podnikatele. Řešíme vaše konkrétní situace, projekty a kariérní posun.
+short: Konzultace a mentoring 1:1 pro marketéry a podnikatele. Řešíme vaše
+  konkrétní situace, projekty a kariérní posun.
 format: Online nebo osobně
 length: 60–90 minut / setkání
 price: Cena na dotaz
