@@ -1,0 +1,183 @@
+---
+import '../styles/global.css';
+import site from '../data/site.json';
+import { getCollection } from 'astro:content';
+
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+}
+
+const { title = site.seoTitle, description = site.seoDescription, noindex = false } = Astro.props;
+const sluzby = (await getCollection('sluzby')).sort((a, b) => a.data.order - b.data.order);
+const path = Astro.url.pathname;
+const canonical = new URL(path, Astro.site);
+const nav = [
+  { href: '/#sluzby', label: 'Služby' },
+  { href: '/kurzy/', label: 'Kurzy a školení' },
+  { href: '/#o-mne', label: 'O mně' },
+  { href: '/#kontakt', label: 'Kontakt' },
+];
+---
+
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" href="/favicon-32.png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="cs_CZ" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  </head>
+  <body class="bg-vh-ivory text-vh-dark">
+
+    <!-- Navigace -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-black/8">
+      <nav class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-3 no-underline">
+          <span class="font-serif leading-none select-none" style="font-size: 32px; color: #1C1C1C;">VH</span>
+          <span class="text-sm text-vh-muted font-sans">Vladka Horáková</span>
+        </a>
+
+        <ul class="hidden md:flex items-center gap-7 text-sm text-vh-muted font-sans">
+          <li class="relative group">
+            <a href="/#sluzby" class="no-underline hover:text-vh-dark transition-colors inline-flex items-center gap-1">
+              Služby
+              <svg class="w-3 h-3" viewBox="0 0 12 12" fill="none"><path d="M3 4.5l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <div class="absolute left-1/2 -translate-x-1/2 top-full pt-4 hidden group-hover:block group-focus-within:block">
+              <ul class="bg-white rounded-2xl border border-vh-dark/5 shadow-lg py-3 w-72">
+                {sluzby.map((s) => (
+                  <li><a href={`/sluzby/${s.id}/`} class="block px-5 py-2.5 text-vh-dark hover:bg-vh-ivory transition-colors">{s.data.title}</a></li>
+                ))}
+              </ul>
+            </div>
+          </li>
+          {nav.slice(1).map((item) => (
+            <li><a href={item.href} class:list={['no-underline hover:text-vh-dark transition-colors', { 'text-vh-dark': path.startsWith('/kurzy') && item.href === '/kurzy/' }]}>{item.label}</a></li>
+          ))}
+          <li>
+            <a href="/#kontakt" class="no-underline px-5 py-2 border border-[#1C1C1C] text-vh-dark rounded-sm text-sm hover:bg-vh-dark hover:text-white transition-colors whitespace-nowrap">
+              Úvodní konzultace
+            </a>
+          </li>
+        </ul>
+
+        <button id="menu-toggle" class="md:hidden p-2 flex flex-col gap-1.5" aria-label="Otevřít menu" aria-expanded="false">
+          <span class="w-6 h-px bg-vh-dark block"></span>
+          <span class="w-6 h-px bg-vh-dark block"></span>
+          <span class="w-4 h-px bg-vh-dark block"></span>
+        </button>
+      </nav>
+
+      <div id="mobile-menu" class="md:hidden hidden bg-vh-ivory border-t border-vh-dark/10">
+        <ul class="flex flex-col px-6 py-5 gap-4 text-sm text-vh-muted">
+          <li class="text-xs uppercase tracking-widest text-vh-bronze">Služby</li>
+          {sluzby.map((s) => (
+            <li><a href={`/sluzby/${s.id}/`} class="hover:text-vh-dark transition-colors pl-3">{s.data.title}</a></li>
+          ))}
+          {nav.slice(1).map((item) => (
+            <li><a href={item.href} class="hover:text-vh-dark transition-colors">{item.label}</a></li>
+          ))}
+          <li>
+            <a href="/#kontakt" class="inline-block px-5 py-2.5 border border-vh-dark text-vh-dark rounded-full hover:bg-vh-dark hover:text-white transition-colors">Úvodní konzultace</a>
+          </li>
+        </ul>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <!-- Patička -->
+    <footer class="bg-vh-dark text-white">
+      <div class="max-w-6xl mx-auto px-6 pt-14 pb-8">
+        <div class="grid gap-10 md:grid-cols-[1.2fr_1fr_1fr] pb-10 border-b border-white/10">
+          <div>
+            <span class="font-serif leading-none select-none mb-3 inline-block" style="font-size: 32px;">VH</span>
+            <p class="text-white/50 font-serif italic text-base">{site.tagline}</p>
+            <p class="text-white/40 text-sm mt-5 leading-relaxed">
+              <a href={`mailto:${site.email}`} class="hover:text-white transition-colors">{site.email}</a>
+              {site.phone && <><br /><a href={`tel:${site.phone.replace(/\s/g, '')}`} class="hover:text-white transition-colors">{site.phone}</a></>}
+            </p>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-widest text-white/40 mb-4">Služby</p>
+            <ul class="space-y-2.5 text-sm text-white/60">
+              {sluzby.map((s) => <li><a href={`/sluzby/${s.id}/`} class="hover:text-white transition-colors">{s.data.title}</a></li>)}
+              <li><a href="/kurzy/" class="hover:text-white transition-colors">Kurzy a školení</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-widest text-white/40 mb-4">Další</p>
+            <ul class="space-y-2.5 text-sm text-white/60">
+              <li><a href="/#o-mne" class="hover:text-white transition-colors">O mně</a></li>
+              <li><a href="/#kontakt" class="hover:text-white transition-colors">Kontakt</a></li>
+              <li><a href={site.webDesignUrl} class="hover:text-white transition-colors">Tvorba webů ↗</a></li>
+              {site.linkedin && <li><a href={site.linkedin} class="hover:text-white transition-colors">LinkedIn ↗</a></li>}
+              <li><a href="/ochrana-osobnich-udaju/" class="hover:text-white transition-colors">Ochrana osobních údajů</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pt-6 flex flex-col sm:flex-row justify-between gap-2">
+          <p class="text-white/30 text-xs">© {new Date().getFullYear()} Vladka Horáková · IČO {site.ico}</p>
+          <p class="text-white/30 text-xs font-serif italic">{site.tagline}</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const toggle = document.getElementById('menu-toggle');
+      const menu = document.getElementById('mobile-menu');
+      toggle?.addEventListener('click', () => {
+        const open = menu?.classList.toggle('hidden') === false;
+        toggle.setAttribute('aria-expanded', String(open));
+      });
+      menu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => menu.classList.add('hidden')));
+
+      // Formuláře se odesílají na pozadí, návštěvník zůstane na stránce.
+      // Bez JavaScriptu fungují i klasicky přes atribut action.
+      document.querySelectorAll<HTMLFormElement>('form[data-ajax]').forEach((form) => {
+        const status = form.querySelector<HTMLElement>('[data-status]');
+        form.addEventListener('submit', async (event) => {
+          event.preventDefault();
+          const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+          if (button) button.disabled = true;
+          try {
+            const response = await fetch(form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), {
+              method: 'POST',
+              headers: { Accept: 'application/json' },
+              body: new FormData(form),
+            });
+            if (!response.ok) throw new Error(String(response.status));
+            form.reset();
+            if (status) {
+              status.textContent = form.dataset.success ?? 'Děkuji, zpráva byla odeslána.';
+              status.className = 'text-sm text-center text-vh-sage';
+            }
+          } catch {
+            if (status) {
+              status.textContent = 'Odeslání se nepodařilo. Zkuste to prosím znovu, nebo mi napište přímo na e-mail.';
+              status.className = 'text-sm text-center text-red-700';
+            }
+          } finally {
+            if (button) button.disabled = false;
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

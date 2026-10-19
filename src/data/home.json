@@ -1,0 +1,79 @@
+{
+  "heroKicker": "Marketingový stratég & konzultantka",
+  "heroTitle": "Marketing, který se propíše do čísel.",
+  "heroTitleLine2": "Strategie postavená na 20 letech praxe.",
+  "heroSubtitle": "Podívám se na váš marketing zvenku, najdu místa, kde vám utíkají peníze a příležitosti, a společně nastavíme plán, který vás posune k vyšším obratům a obchodním cílům.",
+  "heroButton": "Domluvit úvodní konzultaci",
+  "heroLink": "Kurzy a školení",
+  "heroStats": [
+    { "value": "20+", "label": "let v marketingu" },
+    { "value": "Agentury i firmy", "label": "senior stratég i vedoucí marketingu" },
+    { "value": "CZ & global", "label": "projekty pro české i světové značky" }
+  ],
+
+  "problemsKicker": "Kdy se mi ozvat",
+  "problemsTitle": "Poznáváte se?",
+  "problemsText": "Většina firem marketing dělá. Málokterá ho ale řídí podle jasného cíle. Tohle jsou nejčastější situace, se kterými za mnou klienti přicházejí.",
+  "problems": [
+    { "title": "Investujete do marketingu, ale nevíte, co funguje", "text": "Kampaně běží, rozpočet mizí, a přesto chybí jasná odpověď, co skutečně přináší zákazníky a obrat." },
+    { "title": "Obrat stagnuje a konkurence je hlasitější", "text": "Produkt je dobrý, ale trh o vás neví – nebo vás nevnímá tak, jak byste si přáli." },
+    { "title": "Tým jede po kampaních, chybí mu směr", "text": "Marketing reaguje na každodenní požadavky, ale chybí strategie, priority a měřitelné cíle." },
+    { "title": "Nedaří se najít a udržet dobré lidi", "text": "Jako zaměstnavatel nemáte silný příběh a nábor stojí čím dál víc času i peněz." }
+  ],
+
+  "servicesKicker": "Co nabízím",
+  "servicesTitle": "Jak vám mohu pomoci",
+  "servicesText": "Začínám vždy u vašich obchodních cílů. Marketing je pro mě nástroj, jak jich dosáhnout – ne cíl sám o sobě.",
+
+  "processKicker": "Jak spolupráce probíhá",
+  "processTitle": "Od analýzy k výsledkům",
+  "process": [
+    { "title": "Úvodní konzultace", "text": "Nezávazně si popovídáme o vaší firmě, cílech a o tom, co vás trápí. Zjistíme, jestli a jak vám mohu pomoci." },
+    { "title": "Audit a analýza", "text": "Projdu váš marketing, data, komunikaci i konkurenci. Pojmenuji silná místa, slabiny a nevyužité příležitosti." },
+    { "title": "Strategie a plán", "text": "Připravím konkrétní strategii s prioritami, rozpočtem a měřitelnými cíli – srozumitelně, bez agenturních frází." },
+    { "title": "Realizace a vedení", "text": "Pomohu plán zavést do praxe: s vaším týmem, dodavateli nebo jako dlouhodobý externí stratég." }
+  ],
+
+  "aboutKicker": "O mně",
+  "aboutName": "Vladka Horáková",
+  "aboutSubtitle": "Marketingový stratég a konzultantka",
+  "aboutPhoto": "/images/vladka-horakova.jpg",
+  "aboutParagraphs": [
+    "Marketingem se zabývám víc než 20 let. Řídila jsem marketingová oddělení a zastávala pozici seniorního stratéga v předních reklamních agenturách. Navrhovala jsem strategie, projekty a kampaně pro české i světové značky.",
+    "Díky tomu znám marketing z obou stran stolu – jako klient, který potřebuje výsledky, i jako agentura, která je má dodat. Vím, kde se mezi nimi ztrácí čas, peníze a energie.",
+    "Dnes pomáhám firmám a podnikatelům dát marketingu jasný směr: od analýzy přes strategii až po realizaci. A své zkušenosti předávám dál na kurzech a školeních pro marketingové týmy i jednotlivce.",
+    "Pracujete přímo se mnou. Bez prostředníků a bez zbytečných slajdů – s důrazem na to, co skutečně posune váš byznys."
+  ],
+  "aboutHighlights": [
+    "Vedení marketingových oddělení",
+    "Senior stratég v reklamních agenturách",
+    "Strategie a kampaně pro české i světové značky",
+    "Lektorka marketingových kurzů a workshopů"
+  ],
+
+  "coursesKicker": "Kurzy a školení",
+  "coursesTitle": "Předávám know-how dál",
+  "coursesText": "Školení na míru pro interní marketingové týmy i otevřené kurzy pro jednotlivce. Prakticky, na reálných příkladech a s okamžitě použitelnými výstupy.",
+
+  "testimonialsKicker": "Reference",
+  "testimonialsTitle": "Co říkají klienti",
+  "testimonials": [],
+
+  "ctaTitle": "Začneme rozhovorem",
+  "ctaText": "Úvodní konzultace je nezávazná. Řekněte mi, kde je váš marketing dnes a kam ho chcete posunout – a já vám řeknu, jak bych k tomu přistoupila.",
+  "ctaButton": "Domluvit konzultaci",
+
+  "faqKicker": "FAQ",
+  "faqTitle": "Časté otázky",
+  "faq": [
+    { "q": "Pro koho je marketingové poradenství vhodné?", "a": "Pro firmy a podnikatele, kteří chtějí růst a potřebují marketingu dát jasný směr. Pracuji s malými a středními firmami, s firmami s vlastním marketingovým týmem i s těmi, kde marketing dělá majitel sám." },
+    { "q": "Jak dlouho spolupráce trvá?", "a": "Podle potřeby. Může jít o jednorázový audit a strategii (obvykle 3–6 týdnů), nebo o dlouhodobou spolupráci, kdy marketing vedu jako externí stratég a pravidelně se potkávám s vaším týmem." },
+    { "q": "Realizujete i kampaně a obsah?", "a": "Moje role je strategická: nastavím směr, priority, rozpočty a měření a pomohu vybrat a řídit dodavatele. Na realizaci spolupracuji s vaším týmem, agenturami nebo s ověřenými specialisty." },
+    { "q": "Jak probíhá objednávka kurzu?", "a": "U každého kurzu najdete tlačítko Objednat. Vyplníte krátký formulář a já se vám do dvou pracovních dnů ozvu s potvrzením termínu a podklady k platbě. Firemní školení vždy nejprve doladíme na míru." },
+    { "q": "Pracujete i online?", "a": "Ano. Konzultace i řada kurzů probíhá online. Workshopy pro týmy ráda vedu i osobně přímo u vás ve firmě." }
+  ],
+
+  "contactKicker": "Kontakt",
+  "contactTitle": "Pojďme spolupracovat",
+  "contactText": "Napište mi, s čím potřebujete pomoci. Ozvu se do 24 hodin v pracovní dny. První konzultace je nezávazná."
+}

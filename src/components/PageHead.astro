@@ -1,0 +1,20 @@
+---
+import Kicker from './Kicker.astro';
+interface Props { title: string; kicker?: string; lead?: string; crumbs?: { href: string; label: string }[]; }
+const { title, kicker, lead, crumbs = [] } = Astro.props;
+---
+<section class="relative bg-vh-ivory pt-36 pb-16 overflow-hidden">
+  <div class="absolute right-0 top-0 w-[480px] h-[480px] rounded-full bg-vh-muted opacity-[0.06] pointer-events-none translate-x-1/3 -translate-y-1/4" aria-hidden="true"></div>
+  <div class="relative max-w-6xl mx-auto px-6">
+    {crumbs.length > 0 && (
+      <nav class="text-xs text-vh-muted mb-8" aria-label="Drobečková navigace">
+        {crumbs.map((c) => <><a href={c.href} class="hover:text-vh-dark transition-colors">{c.label}</a><span class="mx-2 text-vh-muted/50">/</span></>)}
+        <span class="text-vh-dark">{title}</span>
+      </nav>
+    )}
+    {kicker && <Kicker text={kicker} />}
+    <h1 class="font-serif font-light text-vh-dark leading-[1.08] max-w-3xl" style="font-size: clamp(2.6rem, 6vw, 4.2rem);">{title}</h1>
+    {lead && <p class="text-vh-muted text-lg leading-relaxed mt-6 max-w-2xl">{lead}</p>}
+    <slot />
+  </div>
+</section>

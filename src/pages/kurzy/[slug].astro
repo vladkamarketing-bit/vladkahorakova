@@ -1,0 +1,124 @@
+---
+export const prerender = true;
+
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import PageHead from '../../components/PageHead.astro';
+import Kicker from '../../components/Kicker.astro';
+import Check from '../../components/Check.astro';
+import site from '../../data/site.json';
+
+export async function getStaticPaths() {
+  const kurzy = await getCollection('kurzy');
+  return kurzy.map((k) => ({ params: { slug: k.id }, props: { kurz: k } }));
+}
+
+const { kurz } = Astro.props as { kurz: CollectionEntry<'kurzy'> };
+const k = kurz.data;
+const { Content } = await render(kurz);
+const firmy = k.audience === 'firmy';
+---
+<Layout title={`${k.title} — kurz | Vladka Horáková`} description={k.short} noindex={!k.active}>
+  <PageHead title={k.title} kicker={firmy ? 'Školení pro firmy a týmy' : 'Kurz pro jednotlivce'} lead={k.short} crumbs={[{ href: '/', label: 'Úvod' }, { href: '/kurzy/', label: 'Kurzy a školení' }]}>
+    <dl class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-10 max-w-4xl border-t border-vh-dark/10 pt-6 text-sm">
+      <div><dt class="text-xs text-vh-muted uppercase tracking-wider">Forma</dt><dd class="text-vh-dark mt-1">{k.format}</dd></div>
+      <div><dt class="text-xs text-vh-muted uppercase tracking-wider">Délka</dt><dd class="text-vh-dark mt-1">{k.length}</dd></div>
+      {k.capacity && <div><dt class="text-xs text-vh-muted uppercase tracking-wider">Účastníci</dt><dd class="text-vh-dark mt-1">{k.capacity}</dd></div>}
+      <div><dt class="text-xs text-vh-muted uppercase tracking-wider">Cena</dt><dd class="font-serif italic text-vh-bronze text-lg mt-0.5">{k.price}</dd></div>
+    </dl>
+    <a href="#objednavka" class="inline-block mt-10 px-8 py-4 bg-vh-sage text-white rounded-full text-sm font-medium hover:bg-vh-sage/80 transition-colors">Objednat {firmy ? 'školení' : 'kurz'}</a>
+  </PageHead>
+
+  <section class="bg-white/50 py-20">
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-5">
+      {k.outcomes.length > 0 && (
+        <div class="bg-vh-sage rounded-2xl p-8 md:p-10">
+          <p class="text-xs uppercase tracking-widest text-vh-sage-light mb-4">Co si odnesete</p>
+          <ul class="space-y-3">{k.outcomes.map((x) => <li class="flex items-start gap-3 text-sm text-white/85"><Check light />{x}</li>)}</ul>
+        </div>
+      )}
+      {k.program.length > 0 && (
+        <div class="bg-white rounded-2xl p-8 md:p-10 border border-vh-dark/5">
+          <p class="text-xs uppercase tracking-widest text-vh-bronze mb-4">Program</p>
+          <ol class="space-y-3">
+            {k.program.map((x, i) => <li class="flex items-start gap-4 text-sm text-vh-dark"><span class="font-serif italic text-vh-bronze text-lg leading-5 w-5 shrink-0">{i + 1}</span>{x}</li>)}
+          </ol>
+        </div>
+      )}
+    </div>
+    <div class="max-w-3xl mx-auto px-6 mt-14 prose-vh text-vh-muted text-[15px] leading-relaxed"><Content /></div>
+  </section>
+
+  <!-- Objednávka -->
+  <section id="objednavka" class="bg-vh-ivory py-24 scroll-mt-16">
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-[0.9fr_1.1fr] gap-16 items-start">
+      <div>
+        <Kicker text="Objednávka" />
+        <h2 class="font-serif font-light text-5xl text-vh-dark leading-tight mb-6">Objednat {firmy ? 'školení' : 'kurz'}</h2>
+        <p class="text-vh-muted text-sm leading-relaxed mb-8">
+          {firmy
+            ? 'Vyplňte nezávaznou objednávku. Ozvu se do dvou pracovních dnů, doladíme program na míru vašemu týmu a domluvíme termín. Fakturu posílám až po potvrzení.'
+            : 'Vyplňte objednávku. Do dvou pracovních dnů vám potvrdím místo na kurzu a pošlu fakturu. Místo je rezervované po přijetí platby.'}
+        </p>
+        <div class="bg-white rounded-2xl p-6 border border-vh-dark/5 text-sm">
+          <p class="font-serif text-xl text-vh-dark">{k.title}</p>
+          <p class="text-vh-muted mt-1">{k.format} · {k.length}</p>
+          <p class="font-serif italic text-vh-bronze text-lg mt-3">{k.price}</p>
+        </div>
+      </div>
+
+      <form action={`https://formsubmit.co/${site.email}`} method="POST" class="space-y-5" data-ajax data-success="Děkuji za objednávku! Do dvou pracovních dnů se vám ozvu s potvrzením a dalšími informacemi.">
+        <input type="hidden" name="_subject" value={`Objednávka kurzu: ${k.title}`} />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+        <input type="hidden" name="Kurz" value={k.title} />
+
+        <fieldset>
+          <legend class="field-label">Objednávám jako</legend>
+          <div class="flex gap-3 mt-1">
+            <label class="flex items-center gap-2 px-4 py-2.5 rounded-full border border-vh-dark/15 bg-white text-sm cursor-pointer has-[:checked]:border-vh-sage has-[:checked]:bg-vh-sage has-[:checked]:text-white transition-colors">
+              <input type="radio" name="Objednatel" value="Firma" checked={firmy} class="sr-only" /> Firma
+            </label>
+            <label class="flex items-center gap-2 px-4 py-2.5 rounded-full border border-vh-dark/15 bg-white text-sm cursor-pointer has-[:checked]:border-vh-sage has-[:checked]:bg-vh-sage has-[:checked]:text-white transition-colors">
+              <input type="radio" name="Objednatel" value="Fyzická osoba" checked={!firmy} class="sr-only" /> Fyzická osoba
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div><label class="field-label" for="o-name">Jméno a příjmení</label><input id="o-name" name="Jméno" required autocomplete="name" class="field" /></div>
+          <div><label class="field-label" for="o-email">E-mail</label><input id="o-email" name="email" type="email" required autocomplete="email" class="field" /></div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div><label class="field-label" for="o-phone">Telefon</label><input id="o-phone" name="Telefon" type="tel" required autocomplete="tel" class="field" /></div>
+          <div><label class="field-label" for="o-company">Firma</label><input id="o-company" name="Firma" autocomplete="organization" placeholder={firmy ? '' : 'nepovinné'} required={firmy} class="field" /></div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div><label class="field-label" for="o-ico">IČO</label><input id="o-ico" name="IČO" inputmode="numeric" placeholder="nepovinné" class="field" /></div>
+          <div><label class="field-label" for="o-count">Počet účastníků</label><input id="o-count" name="Počet účastníků" type="number" min="1" value="1" class="field" /></div>
+        </div>
+        <div><label class="field-label" for="o-address">Fakturační adresa</label><input id="o-address" name="Fakturační adresa" autocomplete="street-address" class="field" /></div>
+        <div>
+          <label class="field-label" for="o-date">Termín</label>
+          {k.dates.length > 0 ? (
+            <select id="o-date" name="Termín" class="field">
+              {k.dates.map((d) => <option>{d}</option>)}
+              <option>Jiný termín – domluvíme se</option>
+            </select>
+          ) : (
+            <input id="o-date" name="Preferovaný termín" placeholder={firmy ? 'Např. listopad, ideálně úterý–čtvrtek' : 'Informujte mě o nejbližším termínu'} class="field" />
+          )}
+        </div>
+        <div><label class="field-label" for="o-note">Poznámka</label><textarea id="o-note" name="Poznámka" rows="4" placeholder={firmy ? 'Co by školení mělo řešit, velikost a zkušenost týmu, forma (online / u vás)…' : 'Dotaz nebo poznámka k objednávce'} class="field resize-none"></textarea></div>
+        <label class="flex items-start gap-3 text-xs text-vh-muted leading-relaxed">
+          <input type="checkbox" required class="mt-0.5 accent-[#3D5A47]" />
+          <span>Beru na vědomí, že své údaje poskytuji za účelem vyřízení objednávky podle <a href="/ochrana-osobnich-udaju/" class="underline hover:text-vh-sage">zásad ochrany osobních údajů</a>.</span>
+        </label>
+        <button type="submit" class="w-full py-4 bg-vh-sage text-white rounded-full text-sm font-medium hover:bg-vh-sage/80 transition-colors disabled:opacity-60 disabled:cursor-wait">Odeslat objednávku</button>
+        <p data-status class="hidden" role="status"></p>
+      </form>
+    </div>
+  </section>
+</Layout>

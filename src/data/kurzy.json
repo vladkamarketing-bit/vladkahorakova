@@ -1,0 +1,24 @@
+{
+  "seoTitle": "Kurzy a školení marketingu — Vladka Horáková",
+  "seoDescription": "Školení na míru pro interní marketingové týmy a otevřené kurzy pro jednotlivce: marketingová strategie, obsah, sociální sítě, employer branding.",
+  "kicker": "Kurzy a školení",
+  "title": "Kurzy a školení",
+  "lead": "Prakticky, na reálných příkladech a s výstupy, které hned použijete. Školení na míru pro firemní marketingové týmy i otevřené kurzy pro jednotlivce.",
+  "firmy": {
+    "kicker": "Pro firmy",
+    "title": "Školení pro marketingové týmy",
+    "text": "Program vždy připravuji na míru vaší firmě. Před školením se seznámím s vašimi cíli a podklady, abychom pracovali na tom, co skutečně řešíte."
+  },
+  "jednotlivci": {
+    "kicker": "Pro jednotlivce",
+    "title": "Kurzy pro jednotlivce",
+    "text": "Otevřené kurzy a mentoring pro podnikatele, freelancery a marketéry, kteří chtějí marketing řídit podle cílů."
+  },
+  "steps": [
+    { "title": "Vyberte kurz", "text": "U kurzu klikněte na Objednat a vyplňte krátký formulář. Objednávka je zatím nezávazná." },
+    { "title": "Potvrzení", "text": "Do dvou pracovních dnů se vám ozvu, potvrdím termín a u firemních školení doladíme program." },
+    { "title": "Platba a podklady", "text": "Pošlu vám fakturu a před kurzem všechny potřebné informace a podklady." }
+  ],
+  "customTitle": "Hledáte školení na jiné téma?",
+  "customText": "Připravím školení přesně podle potřeb vašeho týmu – od strategie a plánování přes obsah a sociální sítě až po brand a employer branding."
+}

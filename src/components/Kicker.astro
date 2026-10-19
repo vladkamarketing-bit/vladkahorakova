@@ -1,0 +1,11 @@
+---
+interface Props { text: string; center?: boolean; light?: boolean; }
+const { text, center = false, light = false } = Astro.props;
+const color = light ? 'text-vh-sage-light' : 'text-vh-bronze';
+const line = light ? 'bg-vh-sage-light' : 'bg-vh-bronze';
+---
+<div class:list={['flex items-center gap-4 mb-5', color, { 'justify-center': center }]}>
+  <span class:list={['w-8 h-px', line]}></span>
+  <span class="uppercase tracking-widest text-xs font-medium font-sans">{text}</span>
+  {center && <span class:list={['w-8 h-px', line]}></span>}
+</div>

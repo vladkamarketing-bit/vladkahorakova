@@ -1,0 +1,66 @@
+---
+export const prerender = true;
+
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import PageHead from '../../components/PageHead.astro';
+import Kicker from '../../components/Kicker.astro';
+import CourseCard from '../../components/CourseCard.astro';
+import kurzyPage from '../../data/kurzy.json';
+
+const kurzy = (await getCollection('kurzy')).filter((k) => k.data.active).sort((a, b) => a.data.order - b.data.order);
+const groups = [
+  { id: 'firmy', ...kurzyPage.firmy, items: kurzy.filter((k) => k.data.audience === 'firmy') },
+  { id: 'jednotlivci', ...kurzyPage.jednotlivci, items: kurzy.filter((k) => k.data.audience === 'jednotlivci') },
+].filter((g) => g.items.length > 0);
+---
+<Layout title={kurzyPage.seoTitle} description={kurzyPage.seoDescription}>
+  <PageHead title={kurzyPage.title} kicker={kurzyPage.kicker} lead={kurzyPage.lead} crumbs={[{ href: '/', label: 'Úvod' }]}>
+    <div class="flex flex-wrap gap-3 mt-10">
+      {groups.map((g) => <a href={`#${g.id}`} class="px-6 py-3 border border-vh-dark/20 rounded-full text-sm text-vh-dark hover:bg-vh-dark hover:text-white transition-colors">{g.title}</a>)}
+    </div>
+  </PageHead>
+
+  {groups.map((g, i) => (
+    <section id={g.id} class:list={['py-20 scroll-mt-16', i % 2 === 0 ? 'bg-white/50' : 'bg-vh-ivory']}>
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
+          <div>
+            <Kicker text={g.kicker} />
+            <h2 class="font-serif font-light text-5xl text-vh-dark leading-tight">{g.title}</h2>
+          </div>
+          <p class="text-vh-muted leading-relaxed max-w-md text-sm md:text-right">{g.text}</p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {g.items.map((k) => <CourseCard course={k} />)}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <section class="bg-vh-sage py-20">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <Kicker text="Objednávka" center light />
+        <h2 class="font-serif font-light text-5xl text-white">Jak objednat kurz</h2>
+      </div>
+      <ol class="grid md:grid-cols-3 gap-6">
+        {kurzyPage.steps.map((st, i) => (
+          <li class="bg-vh-dark/20 rounded-2xl p-8">
+            <p class="font-serif italic text-vh-sage-light text-lg mb-2">Krok {i + 1}</p>
+            <h3 class="font-serif text-2xl text-white mb-3">{st.title}</h3>
+            <p class="text-white/70 text-sm leading-relaxed">{st.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="bg-vh-ivory py-20">
+    <div class="max-w-xl mx-auto px-6 text-center flex flex-col items-center gap-6">
+      <h2 class="font-serif font-light text-4xl text-vh-dark">{kurzyPage.customTitle}</h2>
+      <p class="text-vh-muted leading-relaxed">{kurzyPage.customText}</p>
+      <a href="/#kontakt" class="px-10 py-4 bg-vh-sage text-white font-medium rounded-full hover:bg-vh-sage/85 transition-colors">Poptat školení na míru</a>
+    </div>
+  </section>
+</Layout>

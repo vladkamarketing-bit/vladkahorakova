@@ -1,0 +1,14 @@
+---
+export const prerender = true;
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="Stránka nenalezena — Vladka Horáková" noindex>
+  <section class="min-h-[70vh] flex items-center bg-vh-ivory pt-24">
+    <div class="max-w-xl mx-auto px-6 text-center">
+      <p class="font-serif italic text-vh-bronze text-2xl mb-4">404</p>
+      <h1 class="font-serif font-light text-5xl text-vh-dark mb-6">Tahle stránka tu není</h1>
+      <p class="text-vh-muted mb-10">Možná se přesunula, nebo je v adrese překlep.</p>
+      <a href="/" class="px-8 py-4 bg-vh-sage text-white rounded-full text-sm font-medium hover:bg-vh-sage/80 transition-colors">Zpět na úvod</a>
+    </div>
+  </section>
+</Layout>

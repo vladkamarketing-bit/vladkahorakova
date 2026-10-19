@@ -1,0 +1,8 @@
+---
+interface Props { light?: boolean; }
+const { light = false } = Astro.props;
+---
+<svg class:list={['w-5 h-5 flex-shrink-0 mt-0.5', light ? 'text-vh-sage-light' : 'text-vh-sage']} viewBox="0 0 20 20" fill="none" aria-hidden="true">
+  <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.2"/>
+  <path d="M6.5 10.5l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

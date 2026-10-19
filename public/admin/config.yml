@@ -1,0 +1,170 @@
+# Administrace webu (Decap CMS). Přihlášení přes GitHub, změny se ukládají do repozitáře
+# a web se sám znovu sestaví. Adresa pro přihlášení se doplňuje automaticky v index.html.
+backend:
+  name: github
+  repo: vladkamarketing-bit/vladkahorakova
+  branch: main
+  auth_endpoint: oauth
+
+locale: cs
+media_folder: public/images/uploads
+public_folder: /images/uploads
+
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: "-"
+
+collections:
+  # ── Kurzy a školení ───────────────────────────────────
+  - name: kurzy
+    label: Kurzy a školení
+    label_singular: Kurz
+    folder: src/content/kurzy
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} ({{audience}})"
+    sortable_fields: [order, title]
+    fields:
+      - { label: Název kurzu, name: title, widget: string }
+      - { label: Pro koho, name: audience, widget: select, options: [{ label: "Firmy a týmy", value: firmy }, { label: "Jednotlivci", value: jednotlivci }] }
+      - { label: Zobrazit na webu, name: active, widget: boolean, default: true }
+      - { label: Pořadí, name: order, widget: number, value_type: int, default: 10, hint: "Menší číslo = výš v seznamu." }
+      - { label: Krátký popis, name: short, widget: text }
+      - { label: Forma, name: format, widget: string, hint: "Např. Online (živě), Prezenčně u vás ve firmě" }
+      - { label: Délka, name: length, widget: string, hint: "Např. 4 hodiny, 1 den" }
+      - { label: Cena, name: price, widget: string, hint: "Např. 2 900 Kč, nebo Cena na dotaz" }
+      - { label: Počet účastníků, name: capacity, widget: string, required: false }
+      - { label: Termíny, name: dates, widget: list, required: false, field: { label: Termín, name: date, widget: string }, hint: "Např. 12. 11. 2026, 9:00–13:00 (online). Prázdné = termín dle dohody." }
+      - { label: Co si odnesete, name: outcomes, widget: list, field: { label: Bod, name: item, widget: string } }
+      - { label: Program, name: program, widget: list, field: { label: Bod, name: item, widget: string } }
+      - { label: Podrobný popis, name: body, widget: markdown }
+
+  # ── Služby ───────────────────────────────────────────
+  - name: sluzby
+    label: Služby
+    label_singular: Služba
+    folder: src/content/sluzby
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Název, name: title, widget: string }
+      - { label: Hlavní služba, name: main, widget: boolean, default: false, hint: "Zobrazí se na úvodní stránce ve velkém zeleném boxu." }
+      - { label: Pořadí, name: order, widget: number, value_type: int, default: 10 }
+      - { label: Štítek nad nadpisem, name: kicker, widget: string }
+      - { label: Krátký popis (karta na úvodu), name: short, widget: text }
+      - { label: Úvodní text stránky, name: lead, widget: text }
+      - { label: Cena, name: price, widget: string, required: false }
+      - { label: Pro koho, name: forWho, widget: list, field: { label: Bod, name: item, widget: string } }
+      - { label: Co dostanete, name: deliverables, widget: list, field: { label: Bod, name: item, widget: string } }
+      - label: Postup
+        name: steps
+        widget: list
+        fields:
+          - { label: Krok, name: title, widget: string }
+          - { label: Popis, name: text, widget: text }
+      - { label: SEO titulek, name: seoTitle, widget: string, required: false }
+      - { label: SEO popis, name: seoDescription, widget: text, required: false }
+      - { label: Text stránky, name: body, widget: markdown }
+
+  # ── Stránky ──────────────────────────────────────────
+  - name: stranky
+    label: Stránky a texty
+    files:
+      - name: uvod
+        label: Úvodní stránka
+        file: src/data/home.json
+        fields:
+          - { label: Štítek nad nadpisem, name: heroKicker, widget: string }
+          - { label: Hlavní nadpis, name: heroTitle, widget: string }
+          - { label: Nadpis – 2. řádek (kurzíva), name: heroTitleLine2, widget: string }
+          - { label: Úvodní text, name: heroSubtitle, widget: text }
+          - { label: Tlačítko, name: heroButton, widget: string }
+          - { label: Odkaz vedle tlačítka, name: heroLink, widget: string }
+          - label: Čísla pod úvodem
+            name: heroStats
+            widget: list
+            fields: [{ label: Hodnota, name: value, widget: string }, { label: Popisek, name: label, widget: string }]
+          - { label: "Kdy se ozvat – štítek", name: problemsKicker, widget: string }
+          - { label: "Kdy se ozvat – nadpis", name: problemsTitle, widget: string }
+          - { label: "Kdy se ozvat – text", name: problemsText, widget: text }
+          - label: "Kdy se ozvat – karty"
+            name: problems
+            widget: list
+            fields: [{ label: Nadpis, name: title, widget: string }, { label: Text, name: text, widget: text }]
+          - { label: "Služby – štítek", name: servicesKicker, widget: string }
+          - { label: "Služby – nadpis", name: servicesTitle, widget: string }
+          - { label: "Služby – text", name: servicesText, widget: text }
+          - { label: "Proces – štítek", name: processKicker, widget: string }
+          - { label: "Proces – nadpis", name: processTitle, widget: string }
+          - label: "Proces – kroky"
+            name: process
+            widget: list
+            fields: [{ label: Krok, name: title, widget: string }, { label: Text, name: text, widget: text }]
+          - { label: "O mně – štítek", name: aboutKicker, widget: string }
+          - { label: "O mně – jméno", name: aboutName, widget: string }
+          - { label: "O mně – podtitul", name: aboutSubtitle, widget: string }
+          - { label: "O mně – fotka", name: aboutPhoto, widget: image }
+          - { label: "O mně – odstavce", name: aboutParagraphs, widget: list, field: { label: Odstavec, name: p, widget: text } }
+          - { label: "O mně – body", name: aboutHighlights, widget: list, field: { label: Bod, name: item, widget: string } }
+          - { label: "Kurzy – štítek", name: coursesKicker, widget: string }
+          - { label: "Kurzy – nadpis", name: coursesTitle, widget: string }
+          - { label: "Kurzy – text", name: coursesText, widget: text }
+          - { label: "Reference – štítek", name: testimonialsKicker, widget: string }
+          - { label: "Reference – nadpis", name: testimonialsTitle, widget: string }
+          - label: Reference
+            name: testimonials
+            widget: list
+            required: false
+            hint: "Sekce se na webu zobrazí, až přidáte první referenci."
+            fields: [{ label: Citace, name: quote, widget: text }, { label: Jméno, name: name, widget: string }, { label: Pozice / firma, name: role, widget: string }]
+          - { label: "Výzva – nadpis", name: ctaTitle, widget: string }
+          - { label: "Výzva – text", name: ctaText, widget: text }
+          - { label: "Výzva – tlačítko", name: ctaButton, widget: string }
+          - { label: "FAQ – štítek", name: faqKicker, widget: string }
+          - { label: "FAQ – nadpis", name: faqTitle, widget: string }
+          - label: Otázky a odpovědi
+            name: faq
+            widget: list
+            fields: [{ label: Otázka, name: q, widget: string }, { label: Odpověď, name: a, widget: text }]
+          - { label: "Kontakt – štítek", name: contactKicker, widget: string }
+          - { label: "Kontakt – nadpis", name: contactTitle, widget: string }
+          - { label: "Kontakt – text", name: contactText, widget: text }
+      - name: kurzy-stranka
+        label: Stránka Kurzy a školení
+        file: src/data/kurzy.json
+        fields:
+          - { label: SEO titulek, name: seoTitle, widget: string }
+          - { label: SEO popis, name: seoDescription, widget: text }
+          - { label: Štítek, name: kicker, widget: string }
+          - { label: Nadpis, name: title, widget: string }
+          - { label: Úvodní text, name: lead, widget: text }
+          - label: Skupina Pro firmy
+            name: firmy
+            widget: object
+            fields: [{ label: Štítek, name: kicker, widget: string }, { label: Nadpis, name: title, widget: string }, { label: Text, name: text, widget: text }]
+          - label: Skupina Pro jednotlivce
+            name: jednotlivci
+            widget: object
+            fields: [{ label: Štítek, name: kicker, widget: string }, { label: Nadpis, name: title, widget: string }, { label: Text, name: text, widget: text }]
+          - label: Jak objednat – kroky
+            name: steps
+            widget: list
+            fields: [{ label: Krok, name: title, widget: string }, { label: Text, name: text, widget: text }]
+          - { label: "Školení na míru – nadpis", name: customTitle, widget: string }
+          - { label: "Školení na míru – text", name: customText, widget: text }
+      - name: web
+        label: Kontakty a nastavení
+        file: src/data/site.json
+        fields:
+          - { label: Jméno, name: name, widget: string }
+          - { label: Profese, name: role, widget: string }
+          - { label: Motto (patička), name: tagline, widget: string }
+          - { label: SEO titulek webu, name: seoTitle, widget: string }
+          - { label: SEO popis webu, name: seoDescription, widget: text }
+          - { label: E-mail (sem chodí i formuláře), name: email, widget: string }
+          - { label: Telefon, name: phone, widget: string, required: false }
+          - { label: IČO, name: ico, widget: string }
+          - { label: Adresa, name: address, widget: string }
+          - { label: Odkaz na web Tvorba webů, name: webDesignUrl, widget: string }
+          - { label: LinkedIn, name: linkedin, widget: string, required: false }
