@@ -47,5 +47,3 @@ program:
   - Kanály, rozpočet a plán
   - Měření a vyhodnocování
 ---
-
-Kurz je praktický: pracujeme na vašem vlastním podnikání nebo projektu. Po kurzu dostanete pracovní šablonu a záznam ke zpětnému pouštění.
