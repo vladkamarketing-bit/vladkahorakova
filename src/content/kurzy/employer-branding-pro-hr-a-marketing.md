@@ -1,12 +1,14 @@
 ---
 title: Employer branding pro HR a marketing
 audience: firmy
+active: true
 order: 3
-short: Společné školení pro HR a marketing. Jak pojmenovat, proč u vás pracovat, a jak to komunikovat kandidátům i zaměstnancům.
-format: Prezenčně nebo online
+short: Společné školení pro HR a marketing. Jak pojmenovat, proč u vás pracovat,
+  a jak to komunikovat kandidátům i zaměstnancům.
+format: "Prezenčně "
 length: 1 den
 price: Cena na dotaz
-capacity: 4–12 účastníků
+capacity: 4–10 účastníků
 outcomes:
   - Návrh hodnotové nabídky zaměstnavatele (EVP)
   - Persony kandidátů
