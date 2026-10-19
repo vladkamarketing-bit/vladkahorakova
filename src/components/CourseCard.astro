@@ -1,23 +1,26 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { upcoming, termDate } from '../lib/terms';
 interface Props { course: CollectionEntry<'kurzy'>; }
 const { course } = Astro.props;
 const c = course.data;
 const url = `/kurzy/${course.id}/`;
+const next = upcoming(c.terms).filter((t) => t.status !== 'obsazeno').slice(0, 3);
 ---
 <article class="bg-white rounded-2xl p-8 border border-vh-dark/5 flex flex-col hover:shadow-lg transition-shadow">
-  <p class="text-xs uppercase tracking-widest text-vh-bronze font-sans mb-3">{c.audience === 'firmy' ? 'Pro firmy a týmy' : 'Pro jednotlivce'}</p>
+  <p class="text-xs uppercase tracking-widest text-vh-bronze mb-3">{c.audience === 'firmy' ? 'Pro firmy a týmy' : 'Pro jednotlivce'}</p>
   <h3 class="font-serif font-light text-3xl text-vh-dark leading-tight mb-3"><a href={url} class="hover:text-vh-sage transition-colors">{c.title}</a></h3>
-  <p class="text-vh-muted font-sans text-sm leading-relaxed mb-6">{c.short}</p>
-  <dl class="grid grid-cols-2 gap-x-4 gap-y-3 text-sm font-sans mb-6 border-t border-vh-dark/8 pt-5">
-    <div><dt class="text-xs text-vh-muted">Forma</dt><dd class="text-vh-dark">{c.format}</dd></div>
-    <div><dt class="text-xs text-vh-muted">Délka</dt><dd class="text-vh-dark">{c.length}</dd></div>
-    {c.capacity && <div><dt class="text-xs text-vh-muted">Účastníci</dt><dd class="text-vh-dark">{c.capacity}</dd></div>}
-    <div><dt class="text-xs text-vh-muted">Termín</dt><dd class="text-vh-dark">{c.dates.length ? c.dates[0] + (c.dates.length > 1 ? ` a další` : '') : 'dle dohody'}</dd></div>
-  </dl>
+  <p class="text-vh-muted text-sm leading-relaxed mb-6">{c.short}</p>
+  <div class="border-t border-vh-dark/8 pt-5 mb-6 text-sm">
+    <p class="text-xs text-vh-muted mb-2">{c.format} · {c.length}</p>
+    {next.length > 0 ? (
+      <ul class="space-y-1.5">
+        {next.map((t) => <li class="flex justify-between gap-3"><span class="text-vh-dark">{termDate(t)}</span><span class="text-vh-muted">{t.city}</span></li>)}
+      </ul>
+    ) : <p class="text-vh-dark">Termín dle dohody</p>}
+  </div>
   <p class="font-serif italic text-vh-bronze text-lg mb-6">{c.price}</p>
   <div class="mt-auto flex flex-wrap items-center gap-5">
-    <a href={`${url}#objednavka`} class="px-6 py-3 bg-vh-sage text-white rounded-full text-sm font-medium hover:bg-vh-sage/80 transition-colors">Objednat</a>
-    <a href={url} class="text-sm font-medium text-vh-dark hover:text-vh-sage transition-colors group inline-flex items-center gap-1">Detail kurzu <span class="inline-block group-hover:translate-x-1 transition-transform">→</span></a>
+    <a href={url} class="px-6 py-3 bg-vh-sage text-white rounded-full text-sm font-medium hover:bg-vh-sage/80 transition-colors">{next.length > 0 ? 'Termíny a objednávka' : 'Detail a objednávka'}</a>
   </div>
 </article>

@@ -35,7 +35,19 @@ collections:
       - { label: Délka, name: length, widget: string, hint: "Např. 4 hodiny, 1 den" }
       - { label: Cena, name: price, widget: string, hint: "Např. 2 900 Kč, nebo Cena na dotaz" }
       - { label: Počet účastníků, name: capacity, widget: string, required: false }
-      - { label: Termíny, name: dates, widget: list, required: false, field: { label: Termín, name: date, widget: string }, hint: "Např. 12. 11. 2026, 9:00–13:00 (online). Prázdné = termín dle dohody." }
+      - label: Termíny
+        name: terms
+        widget: list
+        required: false
+        summary: "{{fields.date}} – {{fields.city}}"
+        hint: "Každý termín má na webu vlastní řádek s tlačítkem Objednat. Proběhlé termíny se skryjí samy. Bez termínů = termín dle dohody."
+        fields:
+          - { label: Datum, name: date, widget: datetime, date_format: "D. M. YYYY", time_format: false, format: "YYYY-MM-DD", picker_utc: true }
+          - { label: Do (u vícedenních), name: end, widget: datetime, date_format: "D. M. YYYY", time_format: false, format: "YYYY-MM-DD", picker_utc: true, required: false }
+          - { label: Čas, name: time, widget: string, required: false, hint: "Např. 9:00–13:00" }
+          - { label: Město, name: city, widget: string, hint: "Např. Praha, Brno, Online" }
+          - { label: Místo konání, name: venue, widget: string, required: false, hint: "Adresa nebo název místa" }
+          - { label: Obsazenost, name: status, widget: select, default: volno, options: [{ label: "Volná místa", value: volno }, { label: "Poslední místa", value: posledni }, { label: "Obsazeno", value: obsazeno }] }
       - { label: Co si odnesete, name: outcomes, widget: list, field: { label: Bod, name: item, widget: string } }
       - { label: Program, name: program, widget: list, field: { label: Bod, name: item, widget: string } }
       - { label: Podrobný popis, name: body, widget: markdown }

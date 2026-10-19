@@ -148,6 +148,12 @@ const nav = [
       });
       menu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => menu.classList.add('hidden')));
 
+      // Proběhlé termíny kurzů skryjeme i mezi aktualizacemi webu.
+      const today = new Date().toISOString().slice(0, 10);
+      document.querySelectorAll<HTMLElement>('[data-until]').forEach((row) => {
+        if ((row.dataset.until ?? '') < today) row.remove();
+      });
+
       // Formuláře se odesílají na pozadí, návštěvník zůstane na stránce.
       // Bez JavaScriptu fungují i klasicky přes atribut action.
       document.querySelectorAll<HTMLFormElement>('form[data-ajax]').forEach((form) => {

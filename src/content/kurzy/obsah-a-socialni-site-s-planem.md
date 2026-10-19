@@ -3,11 +3,13 @@ title: Obsah a sociální sítě s plánem
 audience: jednotlivci
 order: 2
 short: Jak přestat vymýšlet příspěvky na poslední chvíli. Obsahový plán, který podporuje váš byznys a dá se udržet.
-format: Online (živě)
+format: Prezenčně nebo online (živě)
 length: 3 hodiny
 price: Cena bude upřesněna
 capacity: max. 15 účastníků
-dates: []
+terms:
+  - { date: 2026-11-19, time: "13:00–16:00", city: Online }
+  - { date: 2026-12-03, time: "9:00–12:00", city: Praha, venue: "upřesníme" }
 outcomes:
   - Obsahové pilíře pro vaši značku
   - Měsíční obsahový plán

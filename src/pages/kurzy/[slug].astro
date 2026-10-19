@@ -8,6 +8,8 @@ import PageHead from '../../components/PageHead.astro';
 import Kicker from '../../components/Kicker.astro';
 import Check from '../../components/Check.astro';
 import site from '../../data/site.json';
+import TermsTable from '../../components/TermsTable.astro';
+import { upcoming, termLabel } from '../../lib/terms';
 
 export async function getStaticPaths() {
   const kurzy = await getCollection('kurzy');
@@ -18,6 +20,7 @@ const { kurz } = Astro.props as { kurz: CollectionEntry<'kurzy'> };
 const k = kurz.data;
 const { Content } = await render(kurz);
 const firmy = k.audience === 'firmy';
+const terms = upcoming(k.terms);
 ---
 <Layout title={`${k.title} — kurz | Vladka Horáková`} description={k.short} noindex={!k.active}>
   <PageHead title={k.title} kicker={firmy ? 'Školení pro firmy a týmy' : 'Kurz pro jednotlivce'} lead={k.short} crumbs={[{ href: '/', label: 'Úvod' }, { href: '/kurzy/', label: 'Kurzy a školení' }]}>
@@ -27,8 +30,15 @@ const firmy = k.audience === 'firmy';
       {k.capacity && <div><dt class="text-xs text-vh-muted uppercase tracking-wider">Účastníci</dt><dd class="text-vh-dark mt-1">{k.capacity}</dd></div>}
       <div><dt class="text-xs text-vh-muted uppercase tracking-wider">Cena</dt><dd class="font-serif italic text-vh-bronze text-lg mt-0.5">{k.price}</dd></div>
     </dl>
-    <a href="#objednavka" class="inline-block mt-10 px-8 py-4 bg-vh-sage text-white rounded-full text-sm font-medium hover:bg-vh-sage/80 transition-colors">Objednat {firmy ? 'školení' : 'kurz'}</a>
+    <a href={terms.length ? '#terminy' : '#objednavka'} class="inline-block mt-10 px-8 py-4 bg-vh-sage text-white rounded-full text-sm font-medium hover:bg-vh-sage/80 transition-colors">{terms.length ? 'Termíny a objednávka' : `Objednat ${firmy ? 'školení' : 'kurz'}`}</a>
   </PageHead>
+
+  <section id="terminy" class="bg-vh-ivory pb-16 scroll-mt-20">
+    <div class="max-w-6xl mx-auto px-6">
+      <Kicker text="Termíny kurzu" />
+      <TermsTable courseId={kurz.id} terms={k.terms} firmy={firmy} />
+    </div>
+  </section>
 
   <section class="bg-white/50 py-20">
     <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-5">
@@ -64,6 +74,7 @@ const firmy = k.audience === 'firmy';
         <div class="bg-white rounded-2xl p-6 border border-vh-dark/5 text-sm">
           <p class="font-serif text-xl text-vh-dark">{k.title}</p>
           <p class="text-vh-muted mt-1">{k.format} · {k.length}</p>
+          <p class="text-vh-dark mt-3 text-sm" data-term-summary hidden></p>
           <p class="font-serif italic text-vh-bronze text-lg mt-3">{k.price}</p>
         </div>
       </div>
@@ -102,10 +113,10 @@ const firmy = k.audience === 'firmy';
         <div><label class="field-label" for="o-address">Fakturační adresa</label><input id="o-address" name="Fakturační adresa" autocomplete="street-address" class="field" /></div>
         <div>
           <label class="field-label" for="o-date">Termín</label>
-          {k.dates.length > 0 ? (
-            <select id="o-date" name="Termín" class="field">
-              {k.dates.map((d) => <option>{d}</option>)}
-              <option>Jiný termín – domluvíme se</option>
+          {terms.length > 0 ? (
+            <select id="o-date" name="Termín" class="field" data-terms>
+              {terms.map((t, i) => <option value={termLabel(t)} data-i={i} disabled={t.status === 'obsazeno'}>{termLabel(t)}{t.status === 'obsazeno' ? ' (obsazeno)' : ''}</option>)}
+              <option>Jiný termín – dejte mi vědět o dalších</option>
             </select>
           ) : (
             <input id="o-date" name="Preferovaný termín" placeholder={firmy ? 'Např. listopad, ideálně úterý–čtvrtek' : 'Informujte mě o nejbližším termínu'} class="field" />
@@ -122,3 +133,30 @@ const firmy = k.audience === 'firmy';
     </div>
   </section>
 </Layout>
+
+<script>
+  // Tlačítko Objednat u termínu vede na ?termin=N#objednavka – předvyplníme vybraný termín.
+  const select = document.querySelector<HTMLSelectElement>('select[data-terms]');
+  const summary = document.querySelector<HTMLElement>('[data-term-summary]');
+  const show = () => {
+    if (!select || !summary) return;
+    summary.textContent = `Vybraný termín: ${select.value}`;
+    summary.hidden = false;
+  };
+  const pick = (i: string | null) => {
+    const opt = select?.querySelector<HTMLOptionElement>(`option[data-i="${i}"]`);
+    if (select && opt && !opt.disabled) { select.value = opt.value; show(); }
+  };
+  pick(new URLSearchParams(location.search).get('termin'));
+  select?.addEventListener('change', show);
+  document.querySelectorAll<HTMLAnchorElement>('a[href*="?termin="]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      const url = new URL(a.href);
+      if (url.pathname !== location.pathname) return;
+      e.preventDefault();
+      pick(url.searchParams.get('termin'));
+      history.replaceState(null, '', url.search + url.hash);
+      document.getElementById('objednavka')?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>

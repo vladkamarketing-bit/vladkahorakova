@@ -6,7 +6,6 @@ short: Konzultace a mentoring 1:1 pro marketéry a podnikatele. Řešíme vaše 
 format: Online nebo osobně
 length: 60–90 minut / setkání
 price: Cena na dotaz
-dates: []
 outcomes:
   - Nezávislý pohled na vaše projekty a rozhodnutí
   - Konkrétní doporučení a další kroky

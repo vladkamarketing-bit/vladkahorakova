@@ -31,7 +31,18 @@ const kurzy = defineCollection({
     length: z.string(),
     price: z.string(),
     capacity: z.string().optional(),
-    dates: z.array(z.string()).default([]),
+    terms: z
+      .array(
+        z.object({
+          date: z.coerce.date(),
+          end: z.coerce.date().optional(),
+          time: z.string().optional(),
+          city: z.string(),
+          venue: z.string().optional(),
+          status: z.enum(['volno', 'posledni', 'obsazeno']).default('volno'),
+        }),
+      )
+      .default([]),
     outcomes: z.array(z.string()).default([]),
     program: z.array(z.string()).default([]),
   }),

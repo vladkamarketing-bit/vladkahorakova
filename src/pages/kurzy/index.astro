@@ -5,7 +5,7 @@ import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import PageHead from '../../components/PageHead.astro';
 import Kicker from '../../components/Kicker.astro';
-import CourseCard from '../../components/CourseCard.astro';
+import TermsTable from '../../components/TermsTable.astro';
 import kurzyPage from '../../data/kurzy.json';
 
 const kurzy = (await getCollection('kurzy')).filter((k) => k.data.active).sort((a, b) => a.data.order - b.data.order);
@@ -31,8 +31,26 @@ const groups = [
           </div>
           <p class="text-vh-muted leading-relaxed max-w-md text-sm md:text-right">{g.text}</p>
         </div>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {g.items.map((k) => <CourseCard course={k} />)}
+        <div class="space-y-14">
+          {g.items.map((k) => (
+            <article id={k.id} class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-12 items-start scroll-mt-24 pt-10 border-t border-vh-dark/10 first:pt-0 first:border-0">
+              <div>
+                <h3 class="font-serif font-light text-4xl text-vh-dark leading-tight mb-3"><a href={`/kurzy/${k.id}/`} class="hover:text-vh-sage transition-colors">{k.data.title}</a></h3>
+                <p class="text-vh-muted text-sm leading-relaxed mb-5">{k.data.short}</p>
+                <dl class="grid grid-cols-2 gap-x-4 gap-y-3 text-sm mb-5">
+                  <div><dt class="text-xs text-vh-muted">Forma</dt><dd class="text-vh-dark">{k.data.format}</dd></div>
+                  <div><dt class="text-xs text-vh-muted">Délka</dt><dd class="text-vh-dark">{k.data.length}</dd></div>
+                  {k.data.capacity && <div><dt class="text-xs text-vh-muted">Účastníci</dt><dd class="text-vh-dark">{k.data.capacity}</dd></div>}
+                  <div><dt class="text-xs text-vh-muted">Cena</dt><dd class="font-serif italic text-vh-bronze text-base">{k.data.price}</dd></div>
+                </dl>
+                <a href={`/kurzy/${k.id}/`} class="text-sm font-medium text-vh-dark hover:text-vh-sage transition-colors group inline-flex items-center gap-1">Program a detail kurzu <span class="inline-block group-hover:translate-x-1 transition-transform">→</span></a>
+              </div>
+              <div>
+                <p class="text-xs uppercase tracking-widest text-vh-bronze mb-3">Termíny</p>
+                <TermsTable courseId={k.id} terms={k.data.terms} firmy={k.data.audience === 'firmy'} />
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </section>

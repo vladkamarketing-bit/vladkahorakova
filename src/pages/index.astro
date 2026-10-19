@@ -98,11 +98,11 @@ const cardBg = ['bg-vh-bronze', 'bg-vh-sage/80', 'bg-vh-dark'];
         <div class="flex flex-col justify-between">
           <div>
             <p class="text-vh-sage-light text-xs uppercase tracking-widest mb-4">— {main.data.kicker}</p>
-            <h3 class="font-serif font-light text-4xl text-white leading-tight mb-4">{main.data.title}</h3>
+            <h3 class="font-serif font-light text-4xl text-white leading-tight mb-4"><a href={`/sluzby/${main.id}/`} class="hover:text-vh-sage-light transition-colors">{main.data.title}</a></h3>
             <p class="text-white/70 text-sm leading-relaxed mb-8">{main.data.short}</p>
           </div>
           <div class="flex flex-wrap items-center gap-6">
-            <a href={`/sluzby/${main.id}/`} class="inline-block px-7 py-3.5 bg-white text-vh-sage rounded-full text-sm font-medium hover:bg-vh-ivory transition-colors">Jak poradenství probíhá</a>
+            <a href={`/sluzby/${main.id}/`} class="inline-block px-7 py-3.5 bg-white text-vh-sage rounded-full text-sm font-medium hover:bg-vh-ivory transition-colors">Více o poradenství</a>
             <a href="#kontakt" class="text-white/80 hover:text-white text-sm border-b border-white/30 hover:border-white pb-0.5 transition-colors">Nezávazná konzultace</a>
           </div>
         </div>
