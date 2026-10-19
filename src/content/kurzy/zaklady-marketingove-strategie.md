@@ -1,16 +1,29 @@
 ---
 title: Základy marketingové strategie
 audience: jednotlivci
+active: true
 order: 1
-short: Otevřený kurz pro podnikatele, marketéry a všechny, kdo chtějí marketing řídit podle cílů, ne podle pocitu.
-format: Prezenčně nebo online (živě)
+short: Otevřený kurz pro podnikatele, marketéry a všechny, kdo chtějí marketing
+  řídit podle cílů, ne podle pocitu.
+format: Prezenčně
 length: 4 hodiny
-price: Cena bude upřesněna
+price: 8 500 Kč
 capacity: max. 12 účastníků
 terms:
-  - { date: 2026-11-12, time: "9:00–13:00", city: Praha, venue: "upřesníme" }
-  - { date: 2026-11-26, time: "9:00–13:00", city: Brno, venue: "upřesníme" }
-  - { date: 2026-12-10, time: "9:00–13:00", city: Online, status: posledni }
+  - date: 2026-11-25
+    time: 9:00–17:00
+    city: Praha
+    venue: upřesníme
+    status: posledni
+  - date: 2026-11-26
+    time: 9:00–17:00
+    city: Brno
+    venue: upřesníme
+    status: volno
+  - date: 2026-12-10
+    time: 9:00–17:00
+    city: "Praha "
+    status: posledni
 outcomes:
   - Pochopíte, jak se staví marketingová strategie
   - Naučíte se pojmenovat cílové skupiny a jejich potřeby
