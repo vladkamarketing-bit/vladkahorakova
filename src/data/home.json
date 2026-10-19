@@ -1,8 +1,8 @@
 {
   "coursesTitle": "Předávám know-how dál",
-  "heroTitleLine2": "Když chcete strategicky růst ",
+  "heroTitleLine2": "Když chcete růst a prodávat",
   "aboutKicker": "O mně",
-  "problemsText": "Většina firem marketing dělá. Málokterá ho ale řídí podle jasného cíle. Tohle jsou nejčastější situace, se kterými za mnou klienti přicházejí.",
+  "problemsText": "Většina firem nějaký marketing má. Málokterá ho ale řídí podle jasného cíle a dlouhodobé strategie. Tohle jsou nejčastější situace, se kterými za mnou klienti přicházejí.",
   "processKicker": "Jak spolupráce probíhá",
   "faqTitle": "Časté otázky",
   "ctaButton": "Domluvit konzultaci",
@@ -95,7 +95,7 @@
     },
     {
       "q": "Jak dlouho spolupráce trvá?",
-      "a": "Podle potřeby. Může jít o jednorázový audit a strategii (obvykle 3–6 týdnů), nebo o dlouhodobou spolupráci, kdy marketing vedu jako externí stratég a pravidelně se potkávám s vaším týmem."
+      "a": "Podle potřeby a dohody. Může jít o jednorázový audit a strategii (obvykle 3–6 týdnů), nebo o dlouhodobou spolupráci, kdy marketing vedu jako externí stratég a pravidelně se potkávám s vaším týmem."
     },
     {
       "q": "Realizujete i kampaně a obsah?",
@@ -107,12 +107,12 @@
     },
     {
       "q": "Pracujete i online?",
-      "a": "Ano. Konzultace i řada kurzů probíhá online. Workshopy pro týmy ráda vedu i osobně přímo u vás ve firmě."
+      "a": "Ano. Konzultace i některé kurzy probíhají online. Workshopy pro týmy vedu osobně přímo u vás ve firmě."
     }
   ],
   "contactTitle": "Pojďme spolupracovat",
   "aboutName": "Vladka Horáková",
   "servicesTitle": "Jak vám mohu pomoci",
   "ctaText": "Úvodní konzultace je nezávazná. Řekněte mi, kde je váš marketing dnes a kam ho chcete posunout – a já vám řeknu, jak bych k tomu přistoupila.",
-  "heroTitle": "Marketing, s jasným cílem"
+  "heroTitle": "Marketingová strategie"
 }
