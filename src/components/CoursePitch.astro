@@ -1,0 +1,31 @@
+---
+import Kicker from './Kicker.astro';
+interface Props { pitch?: string; changes: { before: string; after: string }[]; firmy?: boolean; }
+const { pitch, changes, firmy = false } = Astro.props;
+---
+{(pitch || changes.length > 0) && (
+  <section class="bg-vh-ivory pb-20">
+    <div class="max-w-6xl mx-auto px-6 grid lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-16 items-start">
+      {pitch && (
+        <div>
+          <Kicker text={firmy ? 'Co školení firmě přinese' : 'Proč tento kurz'} />
+          <p class="font-serif text-2xl md:text-[1.7rem] leading-snug text-vh-dark">{pitch}</p>
+        </div>
+      )}
+      {changes.length > 0 && (
+        <div class="bg-white rounded-2xl border border-vh-dark/5 p-8 md:p-10">
+          <p class="text-xs uppercase tracking-widest text-vh-bronze mb-6">Co se po {firmy ? 'školení' : 'kurzu'} změní</p>
+          <ul class="divide-y divide-vh-dark/8">
+            {changes.map((c) => (
+              <li class="grid sm:grid-cols-[1fr_auto_1fr] gap-x-4 gap-y-1 items-center py-4 first:pt-0 last:pb-0">
+                <span class="text-sm text-vh-muted"><span class="sm:hidden text-xs uppercase tracking-wider block mb-0.5">Dřív</span>{c.before}</span>
+                <span class="hidden sm:block text-vh-bronze" aria-hidden="true">→</span>
+                <span class="text-sm text-vh-dark font-medium flex items-start gap-2"><svg class="w-4 h-4 mt-0.5 shrink-0 text-vh-sage" viewBox="0 0 20 20" fill="none"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>{c.after}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  </section>
+)}

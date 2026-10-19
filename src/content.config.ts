@@ -27,6 +27,8 @@ const kurzy = defineCollection({
     order: z.number().default(10),
     active: z.boolean().default(true),
     short: z.string(),
+    pitch: z.string().optional(),
+    changes: z.array(z.object({ before: z.string(), after: z.string() })).default([]),
     format: z.string(),
     length: z.string(),
     price: z.string(),

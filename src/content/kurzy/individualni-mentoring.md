@@ -5,6 +5,15 @@ active: true
 order: 3
 short: Konzultace a mentoring 1:1 pro marketéry a podnikatele. Řešíme vaše
   konkrétní situace, projekty a kariérní posun.
+pitch: >-
+  Někdy nepotřebujete další kurz, ale zkušeného parťáka, se kterým si projdete konkrétní situaci – kampaň, rozpočet, prezentaci pro vedení nebo další krok v kariéře. Mentoring vám dá nezávislý pohled po 20 letech praxe v agenturách i firmách a pomůže vám rozhodovat rychleji a s jistotou.
+changes:
+  - before: "Řešíte důležitá rozhodnutí sami a s nejistotou"
+    after: "Máte zkušeného parťáka na přemýšlení"
+  - before: "Točíte se v kruhu nad stejným problémem"
+    after: "Odcházíte z každého setkání s konkrétními dalšími kroky"
+  - before: "Cítíte, že by šlo dělat marketing strategičtěji"
+    after: "Rozvíjíte strategické myšlení a posouváte se v kariéře"
 format: Online nebo osobně
 length: 60–90 minut / setkání
 price: Cena na dotaz

@@ -9,6 +9,7 @@ import Kicker from '../../components/Kicker.astro';
 import Check from '../../components/Check.astro';
 import site from '../../data/site.json';
 import TermsTable from '../../components/TermsTable.astro';
+import CoursePitch from '../../components/CoursePitch.astro';
 import { upcoming, termLabel } from '../../lib/terms';
 
 export async function getStaticPaths() {
@@ -34,6 +35,8 @@ const terms = upcoming(k.terms);
     </dl>
     <a href={terms.length ? '#terminy' : '#objednavka'} class="inline-block mt-10 px-8 py-4 bg-vh-sage text-white rounded-full text-sm font-medium hover:bg-vh-sage/80 transition-colors">{terms.length ? 'Termíny a objednávka' : `Objednat ${firmy ? 'školení' : 'kurz'}`}</a>
   </PageHead>
+
+  <CoursePitch pitch={k.pitch} changes={k.changes} firmy={firmy} />
 
   <section id="terminy" class="bg-vh-ivory pb-16 scroll-mt-20">
     <div class="max-w-6xl mx-auto px-6">
@@ -67,6 +70,8 @@ const terms = upcoming(k.terms);
   <>
   <!-- U kurzů pro jednotlivce nejdřív obsah kurzu, pak cena a termíny -->
   <PageHead title={k.title} kicker={firmy ? 'Školení pro firmy a týmy' : 'Kurz pro jednotlivce'} lead={k.short} crumbs={[{ href: '/', label: 'Úvod' }, { href: '/kurzy/', label: 'Kurzy a školení' }]} />
+
+  <CoursePitch pitch={k.pitch} changes={k.changes} firmy={firmy} />
 
   <section class="bg-vh-ivory pb-20">
     <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-5">

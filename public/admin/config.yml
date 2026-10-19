@@ -31,6 +31,15 @@ collections:
       - { label: Zobrazit na webu, name: active, widget: boolean, default: true }
       - { label: Pořadí, name: order, widget: number, value_type: int, default: 10, hint: "Menší číslo = výš v seznamu." }
       - { label: Krátký popis, name: short, widget: text }
+      - { label: Proč kurz absolvovat, name: pitch, widget: text, required: false, hint: "Motivační odstavec pod úvodem – jak kurz posune firmu nebo účastníka." }
+      - label: Co se po kurzu změní
+        name: changes
+        widget: list
+        required: false
+        summary: "{{fields.before}} → {{fields.after}}"
+        fields:
+          - { label: Dřív, name: before, widget: string }
+          - { label: Po kurzu, name: after, widget: string }
       - { label: Forma, name: format, widget: string, hint: "Např. Online (živě), Prezenčně u vás ve firmě" }
       - { label: Délka, name: length, widget: string, hint: "Např. 4 hodiny, 1 den" }
       - { label: Cena, name: price, widget: string, hint: "Např. 2 900 Kč, nebo Cena na dotaz" }

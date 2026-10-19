@@ -5,6 +5,15 @@ active: true
 order: 3
 short: Společné školení pro HR a marketing. Jak pojmenovat, proč u vás pracovat,
   a jak to komunikovat kandidátům i zaměstnancům.
+pitch: >-
+  Dobří lidé si dnes vybírají zaměstnavatele stejně pečlivě jako zákazníci produkty. Školení propojí HR a marketing a dá vám společný příběh, proč pracovat právě u vás. Výsledkem je rychlejší a levnější nábor, kandidáti, kteří k vám skutečně patří, a zaměstnanci, kteří firmu rádi doporučí.
+changes:
+  - before: "Nábor trvá dlouho a stojí čím dál víc"
+    after: "Oslovujete správné kandidáty rychleji a levněji"
+  - before: "HR a marketing komunikují každý jinak"
+    after: "Máte jednotný příběh zaměstnavatele"
+  - before: "Kandidáty láká hlavně plat"
+    after: "Lákáte na hodnoty, kulturu a smysl práce"
 format: "Prezenčně "
 length: 1 den
 price: Cena na dotaz
