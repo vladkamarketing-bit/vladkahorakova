@@ -6,7 +6,7 @@ order: 1
 short: Otevřený kurz pro podnikatele, marketéry a všechny, kdo chtějí marketing
   řídit podle cílů, ne podle pocitu.
 format: Prezenčně
-length: 4 hodiny
+length: 8 hodiny
 price: 8 500 Kč
 capacity: max. 12 účastníků
 terms:
