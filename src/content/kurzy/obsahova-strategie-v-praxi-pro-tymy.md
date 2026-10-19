@@ -31,5 +31,3 @@ program:
   - Distribuce a propagace obsahu
   - Měření a optimalizace
 ---
-
-Školení je postavené na příkladech z vaší firmy. Předem si vyžádám ukázky současného obsahu a výsledky, abychom pracovali na tom, co skutečně řešíte.

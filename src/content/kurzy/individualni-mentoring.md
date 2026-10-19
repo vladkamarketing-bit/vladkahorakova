@@ -26,5 +26,3 @@ program:
   - Pravidelná setkání nad vašimi tématy
   - Zpětná vazba k plánům, kampaním a prezentacím
 ---
-
-Mentoring je vhodný pro marketéry, kteří chtějí růst do strategičtější role, i pro podnikatele, kteří marketing řídí sami a potřebují parťáka na přemýšlení.

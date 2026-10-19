@@ -62,7 +62,7 @@ const terms = upcoming(k.terms);
         </div>
       )}
     </div>
-    <div class="max-w-3xl mx-auto px-6 mt-14 prose-vh text-vh-muted text-[15px] leading-relaxed"><Content /></div>
+    {kurz.body?.trim() && <div class="max-w-3xl mx-auto px-6 mt-14 prose-vh text-vh-muted text-[15px] leading-relaxed"><Content /></div>}
   </section>
 
   </>
@@ -90,7 +90,7 @@ const terms = upcoming(k.terms);
         </div>
       )}
     </div>
-    <div class="max-w-3xl mx-auto px-6 mt-14 prose-vh text-vh-muted text-[15px] leading-relaxed"><Content /></div>
+    {kurz.body?.trim() && <div class="max-w-3xl mx-auto px-6 mt-14 prose-vh text-vh-muted text-[15px] leading-relaxed"><Content /></div>}
   </section>
 
 

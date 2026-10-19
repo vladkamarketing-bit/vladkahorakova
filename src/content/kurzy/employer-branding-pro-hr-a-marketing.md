@@ -31,5 +31,3 @@ program:
   - Komunikace, kanály a obsah
   - Měření úspěšnosti
 ---
-
-Školení propojuje HR a marketing, které na employer brandingu často pracují odděleně. Na konci dne máte společný základ, na kterém můžete stavět.

@@ -31,7 +31,3 @@ program:
   - Cíle, metriky a vyhodnocování
   - Akční plán a další kroky
 ---
-
-Workshop vždy připravuji na míru. Před ním se potkám s vedením týmu, projdu vaše podklady a data a program upravím podle toho, co aktuálně řešíte – plánování na další rok, nový produkt, pokles výkonu nebo nový tým.
-
-Výstupem není jen dobrý pocit z workshopu, ale **konkrétní dokument s prioritami a plánem**, se kterým tým hned pracuje.

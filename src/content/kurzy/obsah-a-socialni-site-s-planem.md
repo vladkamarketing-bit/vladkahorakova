@@ -33,5 +33,3 @@ program:
   - Plánování a recyklace obsahu
   - Co měřit a jak se zlepšovat
 ---
-
-Kurz je určený pro podnikatele, freelancery a začínající marketéry, kteří se o sociální sítě a obsah starají sami.

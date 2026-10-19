@@ -39,7 +39,6 @@ outcomes:
   - Pochopíte, jak se staví marketingová strategie
   - Naučíte se pojmenovat cílové skupiny a jejich potřeby
   - Zjistíte, jak vybrat správné kanály a rozdělit rozpočet
-  - Odnesete si šablonu strategie pro vlastní byznys
 program:
   - Od obchodního cíle k marketingovému
   - Zákazník, trh a konkurence
