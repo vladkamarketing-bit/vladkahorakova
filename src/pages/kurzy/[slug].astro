@@ -23,6 +23,8 @@ const firmy = k.audience === 'firmy';
 const terms = upcoming(k.terms);
 ---
 <Layout title={`${k.title} — kurz | Vladka Horáková`} description={k.short} noindex={!k.active}>
+{firmy ? (
+  <>
   <PageHead title={k.title} kicker={firmy ? 'Školení pro firmy a týmy' : 'Kurz pro jednotlivce'} lead={k.short} crumbs={[{ href: '/', label: 'Úvod' }, { href: '/kurzy/', label: 'Kurzy a školení' }]}>
     <dl class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-10 max-w-4xl border-t border-vh-dark/10 pt-6 text-sm">
       <div><dt class="text-xs text-vh-muted uppercase tracking-wider">Forma</dt><dd class="text-vh-dark mt-1">{k.format}</dd></div>
@@ -59,6 +61,48 @@ const terms = upcoming(k.terms);
     </div>
     <div class="max-w-3xl mx-auto px-6 mt-14 prose-vh text-vh-muted text-[15px] leading-relaxed"><Content /></div>
   </section>
+
+  </>
+) : (
+  <>
+  <!-- U kurzů pro jednotlivce nejdřív obsah kurzu, pak cena a termíny -->
+  <PageHead title={k.title} kicker={firmy ? 'Školení pro firmy a týmy' : 'Kurz pro jednotlivce'} lead={k.short} crumbs={[{ href: '/', label: 'Úvod' }, { href: '/kurzy/', label: 'Kurzy a školení' }]} />
+
+  <section class="bg-vh-ivory pb-20">
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-5">
+      {k.outcomes.length > 0 && (
+        <div class="bg-vh-sage rounded-2xl p-8 md:p-10">
+          <p class="text-xs uppercase tracking-widest text-vh-sage-light mb-4">Co si odnesete</p>
+          <ul class="space-y-3">{k.outcomes.map((x) => <li class="flex items-start gap-3 text-sm text-white/85"><Check light />{x}</li>)}</ul>
+        </div>
+      )}
+      {k.program.length > 0 && (
+        <div class="bg-white rounded-2xl p-8 md:p-10 border border-vh-dark/5">
+          <p class="text-xs uppercase tracking-widest text-vh-bronze mb-4">Program</p>
+          <ol class="space-y-3">
+            {k.program.map((x, i) => <li class="flex items-start gap-4 text-sm text-vh-dark"><span class="font-serif italic text-vh-bronze text-lg leading-5 w-5 shrink-0">{i + 1}</span>{x}</li>)}
+          </ol>
+        </div>
+      )}
+    </div>
+    <div class="max-w-3xl mx-auto px-6 mt-14 prose-vh text-vh-muted text-[15px] leading-relaxed"><Content /></div>
+  </section>
+
+
+  <section id="terminy" class="bg-white/50 py-20 scroll-mt-20">
+    <div class="max-w-6xl mx-auto px-6">
+      <Kicker text="Cena a termíny" />
+      <dl class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mb-10 text-sm">
+        <div><dt class="text-xs text-vh-muted uppercase tracking-wider">Forma</dt><dd class="text-vh-dark mt-1">{k.format}</dd></div>
+        <div><dt class="text-xs text-vh-muted uppercase tracking-wider">Délka</dt><dd class="text-vh-dark mt-1">{k.length}</dd></div>
+        {k.capacity && <div><dt class="text-xs text-vh-muted uppercase tracking-wider">Účastníci</dt><dd class="text-vh-dark mt-1">{k.capacity}</dd></div>}
+        <div><dt class="text-xs text-vh-muted uppercase tracking-wider">Cena</dt><dd class="font-serif italic text-vh-bronze text-xl mt-0.5">{k.price}</dd></div>
+      </dl>
+      <TermsTable courseId={kurz.id} terms={k.terms} firmy={firmy} />
+    </div>
+  </section>
+  </>
+)}
 
   <!-- Objednávka -->
   <section id="objednavka" class="bg-vh-ivory py-24 scroll-mt-16">
