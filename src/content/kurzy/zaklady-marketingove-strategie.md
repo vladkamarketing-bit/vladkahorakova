@@ -17,7 +17,7 @@ changes:
   - before: "Marketing je série nahodilých aktivit"
     after: "Máte strategii a plán, podle kterého můžete jednat hned zítra"
 format: Prezenčně
-length: 8 hodiny
+length: 8 hodin
 price: 8 500 Kč
 capacity: max. 12 účastníků
 terms:
