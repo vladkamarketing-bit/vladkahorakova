@@ -1,0 +1,352 @@
+---
+// Prodejní landing page kurzu Základy marketingové strategie pro akviziční kampaně.
+// Stránka není v menu ani ve vyhledávačích, vede na ni jen reklama.
+export const prerender = true;
+
+import { getEntry } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Kicker from '../components/Kicker.astro';
+import Check from '../components/Check.astro';
+import site from '../data/site.json';
+import { upcoming, termDate, weekday, termLabel, statusLabel } from '../lib/terms';
+
+const kurz = await getEntry('kurzy', 'zaklady-marketingove-strategie');
+if (!kurz) throw new Error('Chybí kurz zaklady-marketingove-strategie');
+const k = kurz.data;
+const terms = upcoming(k.terms);
+const next = terms.find((t) => t.status !== 'obsazeno');
+const pill = { volno: 'bg-vh-sage-light/50 text-vh-sage', posledni: 'bg-vh-bronze/15 text-vh-bronze', obsazeno: 'bg-vh-dark/5 text-vh-muted' };
+
+const pains = [
+  'Děláte marketing podle toho, co zrovna hoří, a výsledky nepřichází.',
+  'Rozpočet mizí v kampaních a nevíte, co z nich firma má.',
+  'Vedení chce čísla a vy nemáte čím rozhodnutí obhájit.',
+  'Publikujete pravidelně, ale obsah neprodává.',
+];
+
+const benefits = [
+  { t: 'Rozhodujete podle dat', d: 'Víte, jak získat podklady výzkumem i pomocí AI a jak z nich udělat rozhodnutí.' },
+  { t: 'Obhájíte rozpočet', d: 'Spočítáte, kolik stojí zákazník a kolik přinese. Mluvíte jazykem vedení.' },
+  { t: 'Víte, komu prodáváte', d: 'Pojmenujete zákazníky, jejich potřeby a důvod, proč si vybrat právě vás.' },
+  { t: 'Obsah, který prodává', d: 'Plánujete obsah podle fází See – Think – Do – Care, ne nahodile.' },
+  { t: 'Správné kanály a formáty', d: 'Víte, co od kterého kanálu a formátu čekat a kam dát další korunu.' },
+  { t: 'Plán na zítřek', d: 'Odcházíte se strategií na jedné stránce a s plánem na 90 dní.' },
+];
+
+const program = [
+  { n: '01', t: 'Od obchodního cíle k marketingovému', d: 'Cíle, které dávají smysl firmě, ne jen lajkům.' },
+  { n: '02', t: 'Podklady pro strategii', d: 'Výzkum, interní data a AI nástroje. Insighty místo dojmů.' },
+  { n: '03', t: 'Zákazník, trh a konkurence', d: 'Segmenty, persona a místo na trhu, které můžete obsadit.' },
+  { n: '04', t: 'Positioning a sdělení', d: 'Proč si vybrat právě vás, řečeno jednou větou.' },
+  { n: '05', t: 'Obsah pro každou fázi', d: 'See – Think – Do – Care, personalizace a vzorce pro texty.' },
+  { n: '06', t: 'Kanály, formáty a plán', d: 'Co od kterého kanálu čekat, rozpočet a plán na 90 dní.' },
+  { n: '07', t: 'Měření a vyhodnocování', d: 'KPI pro každou fázi a jak poznat, co funguje.' },
+];
+
+const faq = [
+  { q: 'Pro koho je kurz určený?', a: 'Pro podnikatele, marketéry a všechny, kdo mají marketing na starosti a chtějí ho řídit podle cílů. Hodí se pro menší firmy i pro marketéry ve větších týmech.' },
+  { q: 'Potřebuji zkušenosti s marketingem?', a: 'Ne. Začínáme od základů a všechno si ukazujeme na příkladu konkrétní firmy. Pokročilí ocení praktické nástroje a šablony.' },
+  { q: 'Budu pracovat na své firmě?', a: 'Ano. Po každém bloku vyplníte cvičení v pracovním sešitu na svou firmu nebo projekt. Na konci dne máte vlastní strategii.' },
+  { q: 'Co dostanu po kurzu?', a: 'Celé školení jako přehledný e-book, pracovní sešit s cvičeními a šablonami a hotovou strategii na jedné stránce.' },
+  { q: 'Může kurz zaplatit firma?', a: 'Ano. Do objednávky stačí vyplnit název firmy, IČO a fakturační adresu a fakturu vystavím na firmu.' },
+];
+---
+<Layout title={`${k.title} — jednodenní kurz | Vladka Horáková`} description="Za jeden den si postavíte marketingovou strategii, podle které víte, co dělat zítra. E-book a pracovní sešit v ceně." noindex bare={{ cta: 'Přihlásit se', href: '#objednavka' }}>
+
+  <!-- Úvod -->
+  <section class="bg-vh-ivory pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
+    <div class="max-w-6xl mx-auto px-6 grid lg:grid-cols-[1.05fr_0.95fr] gap-14 items-center">
+      <div>
+        <Kicker text={`Jednodenní kurz · ${[...new Set(terms.map((t) => t.city.trim()))].join(' a ') || 'prezenčně'}`} />
+        <h1 class="font-serif font-light text-5xl md:text-6xl leading-[1.05] text-vh-dark">Přestaňte dělat marketing naslepo.</h1>
+        <p class="font-serif italic text-2xl md:text-3xl text-vh-sage mt-5 leading-snug">Za jeden den si postavíte strategii, podle které budete vědět, co dělat zítra.</p>
+        <ul class="mt-8 space-y-3 text-[15px] text-vh-dark">
+          <li class="flex items-start gap-3"><Check />8 hodin praxe na vaší vlastní firmě</li>
+          <li class="flex items-start gap-3"><Check />Malá skupina, {k.capacity ?? 'max. 12 účastníků'}</li>
+          <li class="flex items-start gap-3"><Check />E-book s celým školením a pracovní sešit v ceně</li>
+        </ul>
+        <div class="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
+          <a href="#objednavka" class="inline-block px-8 py-4 bg-vh-sage text-white rounded-full text-sm font-medium hover:bg-vh-dark transition-colors">Chci se přihlásit</a>
+          <div class="text-sm">
+            <span class="font-serif italic text-vh-bronze text-2xl">{k.price}</span>
+            {next && <span class="block text-vh-muted">Nejbližší termín {termDate(next)}, {next.city.trim()}</span>}
+          </div>
+        </div>
+      </div>
+      <div class="relative h-[340px] sm:h-[420px]" aria-hidden="true">
+        <img src="/images/kurz-strategie/w1.jpg" alt="" class="absolute right-0 top-4 w-[44%] rounded-lg shadow-2xl rotate-[4deg]" loading="eager" />
+        <img src="/images/kurz-strategie/e42.jpg" alt="" class="absolute left-[6%] bottom-0 w-[70%] rounded-lg shadow-2xl -rotate-[3deg]" loading="eager" />
+        <img src="/images/kurz-strategie/e1.jpg" alt="" class="absolute left-0 top-0 w-[72%] rounded-lg shadow-2xl" loading="eager" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Bolesti -->
+  <section class="bg-vh-dark text-white py-20">
+    <div class="max-w-6xl mx-auto px-6">
+      <p class="text-xs uppercase tracking-[0.25em] text-vh-sage-light mb-4">Poznáváte se?</p>
+      <h2 class="font-serif font-light text-4xl md:text-5xl leading-tight max-w-3xl">Marketing bez strategie je hodně práce a málo výsledků.</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-12">
+        {pains.map((p) => <p class="border-t border-white/15 pt-5 text-white/75 text-[15px] leading-relaxed">{p}</p>)}
+      </div>
+      <p class="font-serif italic text-2xl text-vh-sage-light mt-12 max-w-3xl">Kurz vás naučí myslet jako stratég: začít u cíle, vědět, komu a proč prodáváte, a investovat jen tam, kde to přinese výsledky.</p>
+    </div>
+  </section>
+
+  <!-- Jak vás posune -->
+  <section class="bg-vh-ivory py-24">
+    <div class="max-w-6xl mx-auto px-6">
+      <Kicker text="Jak vás kurz posune" />
+      <h2 class="font-serif font-light text-4xl md:text-5xl text-vh-dark leading-tight max-w-3xl mb-12">Z vykonavatele kampaní se stanete tím, kdo marketing řídí.</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {benefits.map((b, i) => (
+          <div class={`rounded-2xl p-8 ${i === 1 ? 'bg-vh-sage text-white' : 'bg-white border border-vh-dark/5'}`}>
+            <span class={`font-serif italic text-2xl ${i === 1 ? 'text-vh-sage-light' : 'text-vh-bronze'}`}>{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="font-serif text-2xl mt-2 mb-2">{b.t}</h3>
+            <p class={`text-sm leading-relaxed ${i === 1 ? 'text-white/80' : 'text-vh-muted'}`}>{b.d}</p>
+          </div>
+        ))}
+      </div>
+      {k.changes.length > 0 && (
+        <div class="bg-white rounded-2xl border border-vh-dark/5 p-8 md:p-10 mt-10">
+          <p class="text-xs uppercase tracking-widest text-vh-bronze mb-6">Co se po kurzu změní</p>
+          <ul class="divide-y divide-vh-dark/8">
+            {k.changes.map((c) => (
+              <li class="grid sm:grid-cols-[1fr_auto_1fr] gap-x-6 gap-y-1 items-center py-4 first:pt-0 last:pb-0">
+                <span class="text-sm text-vh-muted"><span class="sm:hidden text-xs uppercase tracking-wider block mb-0.5">Dřív</span>{c.before}</span>
+                <span class="hidden sm:block text-vh-bronze" aria-hidden="true">→</span>
+                <span class="text-sm text-vh-dark font-medium flex items-start gap-2"><Check />{c.after}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- Co dostanete -->
+  <section class="bg-white/50 py-24">
+    <div class="max-w-6xl mx-auto px-6">
+      <Kicker text="Co dostanete" />
+      <h2 class="font-serif font-light text-4xl md:text-5xl text-vh-dark leading-tight max-w-3xl mb-12">Odnesete si víc než poznámky z jednoho dne.</h2>
+      <div class="grid lg:grid-cols-3 gap-6">
+        <div class="bg-white rounded-2xl border border-vh-dark/5 overflow-hidden flex flex-col">
+          <div class="bg-vh-ivory p-6"><img src="/images/kurz-strategie/e48.jpg" alt="Ukázka stránky z e-booku" class="rounded-md shadow-lg" /></div>
+          <div class="p-8 flex-1">
+            <p class="text-xs uppercase tracking-widest text-vh-bronze">E-book</p>
+            <h3 class="font-serif text-2xl text-vh-dark mt-1 mb-3">Celé školení v přehledném PDF</h3>
+            <p class="text-sm text-vh-muted leading-relaxed">Všech 7 bloků, modelové příklady, vzorce pro texty, přehledy kanálů a formátů i hotová zadání pro AI. Vrátíte se k nim kdykoli.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl border border-vh-dark/5 overflow-hidden flex flex-col">
+          <div class="bg-vh-ivory p-6 flex justify-center gap-4"><img src="/images/kurz-strategie/w8.jpg" alt="Ukázka stránky pracovního sešitu" class="w-[46%] rounded-md shadow-lg" /><img src="/images/kurz-strategie/w9.jpg" alt="" class="w-[46%] rounded-md shadow-lg" /></div>
+          <div class="p-8 flex-1">
+            <p class="text-xs uppercase tracking-widest text-vh-bronze">Pracovní sešit</p>
+            <h3 class="font-serif text-2xl text-vh-dark mt-1 mb-3">Cvičení a šablony na vaši firmu</h3>
+            <p class="text-sm text-vh-muted leading-relaxed">Pyramida cílů, plán výzkumu, persona, mapa konkurence, positioning, obsah podle STDC, rozpočet i KPI. Vyplňujete rovnou na svou firmu.</p>
+          </div>
+        </div>
+        <div class="bg-vh-sage text-white rounded-2xl overflow-hidden flex flex-col">
+          <div class="bg-black/15 p-6"><img src="/images/kurz-strategie/strategie-1-strana.jpg" alt="Strategie na jedné stránce" class="rounded-md shadow-lg" /></div>
+          <div class="p-8 flex-1">
+            <p class="text-xs uppercase tracking-widest text-vh-sage-light">Výsledek dne</p>
+            <h3 class="font-serif text-2xl mt-1 mb-3">Strategie na jedné stránce</h3>
+            <p class="text-sm text-white/80 leading-relaxed">Cíl, zákazník, positioning, obsah, kanály, rozpočet, priority na 90 dní a KPI. Hotová mapa, podle které začnete jednat hned další den.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Program -->
+  <section class="bg-vh-ivory py-24">
+    <div class="max-w-6xl mx-auto px-6 grid lg:grid-cols-[0.8fr_1.2fr] gap-14">
+      <div>
+        <Kicker text="Program dne" />
+        <h2 class="font-serif font-light text-4xl md:text-5xl text-vh-dark leading-tight mb-6">Sedm kroků od cíle k výsledkům</h2>
+        <p class="text-vh-muted text-[15px] leading-relaxed">Každý blok stojí na tom předchozím. Teorii hned vyzkoušíte na modelové firmě a pak na své vlastní.</p>
+        <p class="text-sm text-vh-dark mt-8">{k.format} · 9:00–17:00 · {k.capacity}</p>
+      </div>
+      <ol class="divide-y divide-vh-dark/10 border-y border-vh-dark/10">
+        {program.map((p) => (
+          <li class="grid grid-cols-[3rem_1fr] gap-4 py-5">
+            <span class="font-serif italic text-vh-bronze text-2xl leading-none pt-1">{p.n}</span>
+            <span><span class="block font-serif text-2xl text-vh-dark leading-tight">{p.t}</span><span class="block text-sm text-vh-muted mt-1">{p.d}</span></span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Lektor -->
+  <section class="bg-white/50 py-24">
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-[0.7fr_1.3fr] gap-12 items-center">
+      <img src="/images/vladka-horakova.jpg" alt="Vladka Horáková" class="w-full max-w-sm rounded-2xl object-cover aspect-[4/5]" />
+      <div>
+        <Kicker text="Kurzem vás provede" />
+        <h2 class="font-serif font-light text-4xl md:text-5xl text-vh-dark leading-tight">Vladka Horáková</h2>
+        <p class="font-serif italic text-xl text-vh-muted mt-2">{site.role}</p>
+        <div class="mt-6 max-w-xl bg-vh-sage text-white rounded-2xl p-6 md:p-7">
+          <p class="font-serif text-2xl leading-tight">Proč neučím online?</p>
+          <p class="text-sm text-white/85 leading-relaxed mt-3">Online kurzy mají v seberozvoji své místo. Já ale chci být se svými studenty v jedné místnosti: předat jim to, co jsem se za 20 let naučila, odpovědět na každou otázku a pomoct s tím, co je právě trápí. To se přes obrazovku udělat nedá. Proto moji studenti neodcházejí jen s poznámkami, ale s věcmi, které hned použijí v praxi.</p>
+        </div>
+        <p class="text-[15px] text-vh-muted leading-relaxed mt-6 max-w-xl">Marketingem se zabývám přes 20 let. Řídila jsem marketingová oddělení a jako seniorní stratég v předních reklamních agenturách navrhovala strategie a kampaně pro české i světové značky. Na kurzu předávám to, co funguje v praxi, srozumitelně a bez zbytečné teorie.</p>
+        <dl class="grid grid-cols-3 gap-6 mt-8 max-w-lg border-t border-vh-dark/10 pt-6">
+          <div><dt class="font-serif text-3xl text-vh-dark">20+</dt><dd class="text-xs text-vh-muted mt-1">let v marketingu</dd></div>
+          <div><dt class="font-serif text-3xl text-vh-dark">7</dt><dd class="text-xs text-vh-muted mt-1">bloků praxe</dd></div>
+          <div><dt class="font-serif text-3xl text-vh-dark">{(k.capacity ?? '12').replace(/\D+/g, '') || '12'}</dt><dd class="text-xs text-vh-muted mt-1">účastníků nejvýš</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- Termíny -->
+  <section id="terminy" class="bg-vh-ivory py-24 scroll-mt-16">
+    <div class="max-w-6xl mx-auto px-6">
+      <Kicker text="Termíny a cena" />
+      <div class="flex flex-wrap items-end justify-between gap-6 mb-10">
+        <h2 class="font-serif font-light text-4xl md:text-5xl text-vh-dark leading-tight">Vyberte si termín</h2>
+        <p class="text-sm text-vh-muted">Cena za osobu <span class="font-serif italic text-vh-bronze text-3xl ml-2">{k.price}</span></p>
+      </div>
+      {terms.length > 0 ? (
+        <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {terms.map((t, i) => (
+            <li data-until={(t.end ?? t.date).toISOString().slice(0, 10)} class="bg-white rounded-2xl border border-vh-dark/5 p-7 flex flex-col">
+              <span class={`self-start px-3 py-1 rounded-full text-xs font-medium ${pill[t.status]}`}>{statusLabel[t.status]}</span>
+              <span class="font-serif text-3xl text-vh-dark mt-4">{termDate(t)}</span>
+              <span class="text-sm text-vh-muted capitalize">{weekday(t)}{t.time && `, ${t.time}`}</span>
+              <span class="text-sm text-vh-dark mt-3">{t.city.trim()}{t.venue && <span class="text-vh-muted"> · {t.venue}</span>}</span>
+              {t.status === 'obsazeno'
+                ? <span class="mt-6 text-sm text-vh-muted">Kapacita naplněna</span>
+                : <a href={`?termin=${i}#objednavka`} data-pick={i} class="mt-6 text-center px-5 py-3 bg-vh-sage text-white rounded-full text-sm font-medium hover:bg-vh-dark transition-colors">Přihlásit se na tento termín</a>}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="text-vh-muted">Nové termíny připravuji. Vyplňte přihlášku a dám vám vědět jako první.</p>
+      )}
+    </div>
+  </section>
+
+  <!-- Objednávka -->
+  <section id="objednavka" class="bg-vh-dark text-white py-24 scroll-mt-16">
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-[0.85fr_1.15fr] gap-14 items-start">
+      <div>
+        <p class="text-xs uppercase tracking-[0.25em] text-vh-sage-light mb-4">Přihláška</p>
+        <h2 class="font-serif font-light text-4xl md:text-5xl leading-tight mb-6">Rezervujte si místo</h2>
+        <p class="text-white/70 text-[15px] leading-relaxed mb-8">Do dvou pracovních dnů vám potvrdím místo a pošlu fakturu. Místo je rezervované po přijetí platby. Skupina má nejvýš 12 účastníků.</p>
+        <div class="bg-white/5 rounded-2xl p-7">
+          <p class="font-serif text-2xl">{k.title}</p>
+          <p class="text-white/60 text-sm mt-1">{k.format} · 9:00–17:00</p>
+          <ul class="mt-5 space-y-2.5 text-sm text-white/85">
+            <li class="flex items-start gap-3"><Check light />Celodenní kurz v malé skupině</li>
+            <li class="flex items-start gap-3"><Check light />E-book s celým školením</li>
+            <li class="flex items-start gap-3"><Check light />Pracovní sešit s cvičeními a šablonami</li>
+            <li class="flex items-start gap-3"><Check light />Vaše strategie na jedné stránce</li>
+          </ul>
+          <p class="text-white text-sm mt-5" data-term-summary hidden></p>
+          <p class="font-serif italic text-vh-sage-light text-3xl mt-4">{k.price}</p>
+        </div>
+      </div>
+
+      <form action={`https://formsubmit.co/${site.email}`} method="POST" class="space-y-5 bg-vh-ivory text-vh-dark rounded-2xl p-7 md:p-10" data-ajax data-lead data-success="Děkuji za přihlášku! Do dvou pracovních dnů vám potvrdím místo a pošlu fakturu.">
+        <input type="hidden" name="_subject" value={`Přihláška z kampaně: ${k.title}`} />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+        <input type="hidden" name="Kurz" value={k.title} />
+        <input type="hidden" name="Zdroj" value="Landing page kampaně" data-source />
+
+        <div>
+          <label class="field-label" for="o-date">Termín</label>
+          {terms.length > 0 ? (
+            <select id="o-date" name="Termín" class="field" data-terms>
+              {terms.map((t, i) => <option value={termLabel(t)} data-i={i} disabled={t.status === 'obsazeno'}>{termLabel(t)}{t.status === 'obsazeno' ? ' (obsazeno)' : ''}</option>)}
+              <option>Jiný termín – dejte mi vědět o dalších</option>
+            </select>
+          ) : (
+            <input id="o-date" name="Preferovaný termín" placeholder="Informujte mě o nejbližším termínu" class="field" />
+          )}
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div><label class="field-label" for="o-name">Jméno a příjmení</label><input id="o-name" name="Jméno" required autocomplete="name" class="field" /></div>
+          <div><label class="field-label" for="o-email">E-mail</label><input id="o-email" name="email" type="email" required autocomplete="email" class="field" /></div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div><label class="field-label" for="o-phone">Telefon</label><input id="o-phone" name="Telefon" type="tel" required autocomplete="tel" class="field" /></div>
+          <div><label class="field-label" for="o-count">Počet účastníků</label><input id="o-count" name="Počet účastníků" type="number" min="1" max="12" value="1" class="field" /></div>
+        </div>
+        <details class="group">
+          <summary class="cursor-pointer text-sm text-vh-sage font-medium list-none flex items-center gap-2"><span class="group-open:rotate-45 transition-transform text-lg leading-none">+</span>Fakturovat na firmu</summary>
+          <div class="grid sm:grid-cols-2 gap-4 mt-4">
+            <div><label class="field-label" for="o-company">Firma</label><input id="o-company" name="Firma" autocomplete="organization" class="field" /></div>
+            <div><label class="field-label" for="o-ico">IČO</label><input id="o-ico" name="IČO" inputmode="numeric" class="field" /></div>
+          </div>
+          <div class="mt-4"><label class="field-label" for="o-address">Fakturační adresa</label><input id="o-address" name="Fakturační adresa" autocomplete="street-address" class="field" /></div>
+        </details>
+        <div><label class="field-label" for="o-note">Poznámka</label><textarea id="o-note" name="Poznámka" rows="3" placeholder="Nepovinné: obor, co od kurzu čekáte, dotaz" class="field resize-none"></textarea></div>
+        <label class="flex items-start gap-3 text-xs text-vh-muted leading-relaxed">
+          <input type="checkbox" required class="mt-0.5 accent-[#3D5A47]" />
+          <span>Beru na vědomí, že své údaje poskytuji za účelem vyřízení přihlášky podle <a href="/ochrana-osobnich-udaju/" class="underline hover:text-vh-sage">zásad ochrany osobních údajů</a>.</span>
+        </label>
+        <button type="submit" class="w-full py-4 bg-vh-sage text-white rounded-full text-sm font-medium hover:bg-vh-dark transition-colors disabled:opacity-60 disabled:cursor-wait">Závazně se přihlásit · {k.price}</button>
+        <p data-status class="hidden" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Časté dotazy -->
+  <section class="bg-vh-ivory py-24">
+    <div class="max-w-3xl mx-auto px-6">
+      <Kicker text="Časté dotazy" />
+      <div class="divide-y divide-vh-dark/10 border-y border-vh-dark/10">
+        {faq.map((f) => (
+          <details class="group py-5">
+            <summary class="cursor-pointer list-none flex justify-between gap-6 font-serif text-xl text-vh-dark">{f.q}<span class="text-vh-bronze group-open:rotate-45 transition-transform">+</span></summary>
+            <p class="text-sm text-vh-muted leading-relaxed mt-3">{f.a}</p>
+          </details>
+        ))}
+      </div>
+      <div class="text-center mt-14">
+        <p class="font-serif italic text-2xl text-vh-dark mb-6">Jeden den, který vám ušetří měsíce zkoušení.</p>
+        <a href="#objednavka" class="inline-block px-8 py-4 bg-vh-sage text-white rounded-full text-sm font-medium hover:bg-vh-dark transition-colors">Chci se přihlásit</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  // Termín z tlačítka nebo z odkazu ?termin=N předvyplníme ve formuláři.
+  const select = document.querySelector<HTMLSelectElement>('select[data-terms]');
+  const summary = document.querySelector<HTMLElement>('[data-term-summary]');
+  const show = () => {
+    if (!select || !summary) return;
+    summary.textContent = `Vybraný termín: ${select.value}`;
+    summary.hidden = false;
+  };
+  const pick = (i: string | null) => {
+    const opt = select?.querySelector<HTMLOptionElement>(`option[data-i="${i}"]`);
+    if (select && opt && !opt.disabled) { select.value = opt.value; show(); }
+  };
+  pick(new URLSearchParams(location.search).get('termin'));
+  select?.addEventListener('change', show);
+  document.querySelectorAll<HTMLAnchorElement>('a[data-pick]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      pick(a.dataset.pick ?? null);
+      document.getElementById('objednavka')?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // Zdroj kampaně (UTM) přidáme k přihlášce, ať je vidět, odkud přišla.
+  const params = new URLSearchParams(location.search);
+  const utm = ['utm_source', 'utm_medium', 'utm_campaign'].map((k) => params.get(k)).filter(Boolean).join(' / ');
+  const source = document.querySelector<HTMLInputElement>('[data-source]');
+  if (source && utm) source.value += ` (${utm})`;
+
+  // Odeslaná přihláška = konverze pro Google Analytics (jen po souhlasu s cookies).
+  document.querySelector('form[data-lead]')?.addEventListener('form:sent', () => {
+    const w = window as unknown as { gtag?: (...a: unknown[]) => void };
+    w.gtag?.('event', 'generate_lead', { form: 'kurz-strategie' });
+  });
+</script>

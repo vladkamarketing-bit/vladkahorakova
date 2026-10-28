@@ -8,9 +8,11 @@ interface Props {
   title?: string;
   description?: string;
   noindex?: boolean;
+  /** Kampaňová stránka: bez menu a s jednoduchou patičkou, ať návštěvník neodchází jinam. */
+  bare?: { cta: string; href: string };
 }
 
-const { title = site.seoTitle, description = site.seoDescription, noindex = false } = Astro.props;
+const { title = site.seoTitle, description = site.seoDescription, noindex = false, bare } = Astro.props;
 const sluzby = (await getCollection('sluzby')).sort((a, b) => a.data.order - b.data.order);
 const path = Astro.url.pathname;
 const canonical = new URL(path, Astro.site);
@@ -52,6 +54,9 @@ const nav = [
           <span class="text-sm text-vh-muted font-sans">Vladka Horáková</span>
         </a>
 
+        {bare ? (
+          <a href={bare.href} class="no-underline px-5 py-2 bg-vh-sage text-white rounded-full text-sm hover:bg-vh-dark transition-colors whitespace-nowrap">{bare.cta}</a>
+        ) : (<>
         <ul class="hidden md:flex items-center gap-7 text-sm text-vh-muted font-sans">
           <li class="relative group">
             <a href="/#sluzby" class="no-underline hover:text-vh-dark transition-colors inline-flex items-center gap-1">
@@ -81,9 +86,10 @@ const nav = [
           <span class="w-6 h-px bg-vh-dark block"></span>
           <span class="w-4 h-px bg-vh-dark block"></span>
         </button>
+        </>)}
       </nav>
 
-      <div id="mobile-menu" class="md:hidden hidden bg-vh-ivory border-t border-vh-dark/10">
+      {!bare && <div id="mobile-menu" class="md:hidden hidden bg-vh-ivory border-t border-vh-dark/10">
         <ul class="flex flex-col px-6 py-5 gap-4 text-sm text-vh-muted">
           <li class="text-xs uppercase tracking-widest text-vh-bronze">Služby</li>
           {sluzby.map((s) => (
@@ -96,7 +102,7 @@ const nav = [
             <a href="/#kontakt" class="inline-block px-5 py-2.5 border border-vh-dark text-vh-dark rounded-full hover:bg-vh-dark hover:text-white transition-colors">Úvodní konzultace</a>
           </li>
         </ul>
-      </div>
+      </div>}
     </header>
 
     <main>
@@ -104,6 +110,14 @@ const nav = [
     </main>
 
     <!-- Patička -->
+    {bare ? (
+    <footer class="bg-vh-dark text-white">
+      <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row justify-between gap-3 text-xs text-white/40">
+        <p>© {new Date().getFullYear()} Vladka Horáková · IČO {site.ico} · <a href={`mailto:${site.email}`} class="hover:text-white transition-colors">{site.email}</a></p>
+        <p class="flex gap-5"><a href="/ochrana-osobnich-udaju/" class="hover:text-white transition-colors">Ochrana osobních údajů</a><button type="button" data-cc="show-preferencesModal" class="hover:text-white transition-colors cursor-pointer">Nastavení cookies</button></p>
+      </div>
+    </footer>
+    ) : (
     <footer class="bg-vh-dark text-white">
       <div class="max-w-6xl mx-auto px-6 pt-14 pb-8">
         <div class="grid gap-10 md:grid-cols-[1.2fr_1fr_1fr] pb-10 border-b border-white/10">
@@ -140,6 +154,7 @@ const nav = [
         </div>
       </div>
     </footer>
+    )}
 
     <script>
       const toggle = document.getElementById('menu-toggle');
@@ -172,6 +187,7 @@ const nav = [
             });
             if (!response.ok) throw new Error(String(response.status));
             form.reset();
+            form.dispatchEvent(new CustomEvent('form:sent', { bubbles: true }));
             if (status) {
               status.textContent = form.dataset.success ?? 'Děkuji, zpráva byla odeslána.';
               status.className = 'text-sm text-center text-vh-sage';
